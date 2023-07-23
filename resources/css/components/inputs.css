@@ -1,0 +1,9 @@
+.input-text,
+.input-email,
+.input-password {
+    @apply appearance-none leading-tight w-full px-3 py-3 border border-gray-500 rounded text-gray-700 focus:border-2 focus:outline-none hover:border-sky-500 focus:border-sky-500;
+}
+.input-icon {
+    @apply absolute top-1/2 right-0;
+    transform: translate(-50%, -50%);
+}

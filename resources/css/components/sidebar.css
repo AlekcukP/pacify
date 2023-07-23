@@ -1,0 +1,25 @@
+.sidebar {
+    @apply pt-1 text-sm;
+}
+
+.sidebar .submenu {
+    @apply px-0 py-[1px];
+}
+
+.sidebar .submenu a {
+    @apply h-9 ;
+}
+
+.sidebar .menu a {
+    @apply h-10 py-0 px-3;
+}
+
+.sidebar div[class*='submenu-content'] span[class*='icon'] {
+    @apply ml-2.5;
+}
+
+.sidebar .submenu a:hover,
+.sidebar .menu a:hover,
+.sidebar a[class*='active']{
+    @apply bg-gray-200 border-l-2 border-sky-600 text-sky-600 pl-2.5;
+}
