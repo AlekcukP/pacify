@@ -28,11 +28,11 @@ const Form = () => {
         <Divider margin={4} text={"or"}/>
 
         <div>
-            <Button className='btn-bordered flex-center' onClick={() => console.log('google sign up')}>
+            <Button className='btn-bordered' onClick={() => console.log('google sign up')}>
                 <Google className='mr-3'/>
                 <span>Continue with Google</span>
             </Button>
-            <Button className='btn-bordered flex-center my-4' onClick={() => console.log('facebook sign up')}>
+            <Button className='btn-bordered my-4' onClick={() => console.log('facebook sign up')}>
                 <Facebook className='mr-3'/>
                 <span>Continue with Facebook</span>
             </Button>

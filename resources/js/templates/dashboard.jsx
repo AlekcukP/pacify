@@ -8,9 +8,9 @@ const Dashboard = () => {
         <Header />
         <div className="flex h-full">
             <Sidebar />
-            <main className="full-size p-2.5 bg-gray-100">
+            <div className="full-size p-2.5 bg-gray-100">
                 <Outlet />
-            </main>
+            </div>
         </div>
     </div>;
 };

@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { INPUT_TYPES } from '../../constants/components';
 import { Exclamation, Eye, InvisisbleEye } from '../icons/forms';
 
-const Input = ({ label, value, onChange, error, type, placeholder, className, required }) => {
+const Input = ({ label, value, onChange, error, type, placeholder, className, required, name, id }) => {
     const [inputType, setInputType] = useState(type);
     const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -31,10 +31,12 @@ const Input = ({ label, value, onChange, error, type, placeholder, className, re
                 <input
                     className={`input-${type}`}
                     type={inputType}
+                    name={name}
                     value={value}
                     onChange={e => onChange(e.target.value)}
                     placeholder={placeholder}
                     required={required}
+                    id={id}
                 />
                 {type === INPUT_TYPES.PASSWORD && <EyeIcon />}
             </div>
@@ -51,7 +53,9 @@ Input.propTypes = {
     type: PropTypes.oneOf(Object.values(INPUT_TYPES)),
     placeholder: PropTypes.string,
     required: PropTypes.bool,
-    className: PropTypes.string
+    className: PropTypes.string,
+    name: PropTypes.string,
+    id: PropTypes.string
 };
 
 Input.defaultProps = {
@@ -60,7 +64,9 @@ Input.defaultProps = {
     label: '',
     error: '',
     placeholder: '',
-    className: ''
+    className: '',
+    name: null,
+    id: null,
 };
 
 export default Input;
