@@ -4,7 +4,7 @@ import { Mail } from "../../components/icons/interactive";
 import { Google } from "../../components/icons/social";
 import { Facebook } from "../../components/icons/social";
 
-const Buttons = ({ setEmailSignUp }) => {
+const Buttons = () => {
     return <Fragment>
         <Button className='btn-bordered' onClick={() => console.log('with email')}>
             <Mail className='mr-3'/>

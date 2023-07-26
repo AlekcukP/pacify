@@ -7,7 +7,7 @@ import Header from "../layouts/interactive/header";
 import Footer from "../layouts/interactive/footer";
 import Form from "../layouts/lookup/form";
 
-const LookUp = () => {
+const Lookup = () => {
     return <Fragment>
         <Logo />
 
@@ -17,11 +17,11 @@ const LookUp = () => {
 
         <div className='text-sm font-light'>
             <span>New to {APP_NAME}?</span>
-            <Link to={ROUTES.SIGNUP} className='text-sky-500'> Get started </Link>
+            <Link to={ROUTES.SIGNUP} className='link'> Get started </Link>
         </div>
 
         <Footer />
     </Fragment>;
 };
 
-export default LookUp;
+export default Lookup;

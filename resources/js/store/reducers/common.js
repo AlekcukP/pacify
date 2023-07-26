@@ -1,6 +1,6 @@
-import { ACTIONS, INITIAL_STATE } from "../constants/state";
+import { ACTIONS, INITIAL_STATE } from "../../constants/state";
 
-const reducer = (state = INITIAL_STATE, action) => {
+export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case ACTIONS.START_LOADING:
             return { ...state, loading: true };
@@ -10,5 +10,3 @@ const reducer = (state = INITIAL_STATE, action) => {
             return state;
     }
 };
-
-export default reducer;

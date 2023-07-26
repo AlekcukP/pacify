@@ -1,5 +1,10 @@
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import reducer from './reducers';
+import { configureStore } from '@reduxjs/toolkit'
+import signupReducer from './interactive/signup';
 
-export default createStore(reducer, applyMiddleware(thunk));
+const store = configureStore({
+    reducer: {
+        signup: signupReducer
+    }
+})
+
+export default store

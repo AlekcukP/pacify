@@ -11,7 +11,7 @@ const Form = () => {
     return <Fragment>
         <div>
             <Input
-                className="mb-1"
+                className="mb-2"
                 label="Email"
                 type="email"
                 value={email}
@@ -20,7 +20,7 @@ const Form = () => {
                 placeholder={"Email"}
             />
 
-            <Button className="btn-primary mt-1" onClick={() => console.log('continue with email')}>
+            <Button className="btn-primary" onClick={() => console.log('continue with email')}>
                 Continue with Email
             </Button>
         </div>

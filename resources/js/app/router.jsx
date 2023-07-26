@@ -6,21 +6,21 @@ import { ROUTES } from '../constants/routes';
 import Interactive from '../templates/interactive';
 import Dashboard from '../templates/dashboard';
 
-import LookUp from '../pages/lookup';
-import SignUp from '../pages/signup';
-import Home from '../pages/dashboard/home';
-import Analytics from '../pages/dashboard/analytics';
-import Discounts from '../pages/dashboard/discounts';
-import Marketing from '../pages/dashboard/marketing';
-import Customers from '../pages/dashboard/customers';
-import Segments from '../pages/dashboard/segments';
+import Lookup from '../modules/lookup';
+import Signup from '../modules/signup';
+import Home from '../modules/dashboard/home';
+import Analytics from '../modules/dashboard/analytics';
+import Discounts from '../modules/dashboard/discounts';
+import Marketing from '../modules/dashboard/marketing';
+import Customers from '../modules/dashboard/customers';
+import Segments from '../modules/dashboard/segments';
 
 const Router = () => {
     return <BrowserRouter>
         <Routes>
             <Route element={<Interactive />}>
-                <Route path={ROUTES.LOOKUP} element={<LookUp />} />
-                <Route path={ROUTES.SIGNUP} element={<SignUp />} />
+                <Route path={ROUTES.LOOKUP} element={<Lookup />} />
+                <Route path={ROUTES.SIGNUP} element={<Signup />} />
             </Route>
 
             <Route element={<Dashboard />}>

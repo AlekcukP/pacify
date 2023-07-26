@@ -8,7 +8,7 @@ const isTabActive = (path, currentPath) => {
 };
 
 const isTabOpen = (path, currentPath) => {
-    return _.startsWith(currentPath, path)
+    return _.startsWith(currentPath, path);
 };
 
 const PathContext = createContext(null);

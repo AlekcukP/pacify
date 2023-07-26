@@ -7,29 +7,29 @@ import Footer from "../layouts/interactive/footer";
 import Header from "../layouts/interactive/header";
 import Form from "../layouts/signup/form";
 
-const SignUp = () => {
-    const [emailSignUp, setEmailSignUp] = useState(false);
+const Signup = () => {
+    const [emailSignup, setEmailSignup] = useState(false);
 
     return <Fragment>
         <Logo />
 
         <Header title={"Create an account"} subtext={"One last step before starting use an app"}/>
 
-        {!emailSignUp ? <Form /> : <Buttons />}
+        {emailSignup ? <Form /> : <Buttons />}
 
         <div className='text-sm font-light mb-2'>
             By proceeding, you agree to the
-            <a href='#' className='text-sky-500'> Terms and Conditions </a> and
-            <a href='#' className='text-sky-500'> Privacy Policy</a>
+            <a href='#' className='link'> Terms and Conditions </a> and
+            <a href='#' className='link'> Privacy Policy</a>
         </div>
 
         <div className='text-sm font-light'>
             <span>Already have an account?</span>
-            <Link to={ROUTES.LOOKUP} className='text-sky-500' onClick={() => setEmailSignUp(false)}> Log in </Link>
+            <Link to={ROUTES.LOOKUP} className='link' onClick={() => setEmailSignup(false)}> Log in </Link>
         </div>
 
         <Footer />
     </Fragment>;
 };
 
-export default SignUp;
+export default Signup;

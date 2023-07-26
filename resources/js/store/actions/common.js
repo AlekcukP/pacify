@@ -1,4 +1,4 @@
-import { ACTIONS } from "../constants/state";
+import { ACTIONS } from "../../constants/state";
 
 export const startLoading = () => {
     return {
