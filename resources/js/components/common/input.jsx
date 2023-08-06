@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { INPUT_TYPES } from '../../constants/components';
 import { Exclamation, Eye, InvisisbleEye } from '../icons/forms';
 
-const Input = ({ label, value, onChange, error, type, placeholder, className, required, name, id }) => {
+const Input = forwardRef(({ label, value, onChange, error, type, placeholder, className, name, id, onBlur }, ref) => {
     const [inputType, setInputType] = useState(type);
     const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -33,17 +33,18 @@ const Input = ({ label, value, onChange, error, type, placeholder, className, re
                     type={inputType}
                     name={name}
                     value={value}
-                    onChange={e => onChange(e.target.value)}
                     placeholder={placeholder}
-                    required={required}
                     id={id}
+                    onBlur={onBlur}
+                    onChange={onChange}
+                    ref={ref}
                 />
                 {type === INPUT_TYPES.PASSWORD && <EyeIcon />}
             </div>
             {error && <Error />}
         </div>
     );
-};
+});
 
 Input.propTypes = {
     value: PropTypes.string.isRequired,

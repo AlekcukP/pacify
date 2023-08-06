@@ -9,3 +9,5 @@
 @import './components/sidebar.css';
 @import './components/inputs.css';
 @import './components/buttons.css';
+
+@import './layouts/navbar.css';
