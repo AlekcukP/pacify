@@ -17,11 +17,31 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
+    protected $columns_config = [
         'password',
+        'account_type',
+        'last_name',
+        'email',
+        'birth_date',
+        'gender',
+        'account_status',
+        'created_at',
     ];
+    // /**
+    //  * The attributes that are mass assignable.
+    //  *
+    //  * @var array<int, string>
+    //  */
+    // protected $fillable = [
+    //     'password',
+    //     'account_type',
+    //     'last_name',
+    //     'email',
+    //     'birth_date',
+    //     'gender',
+    //     'account_status',
+    //     'created_at',
+    // ];
 
     /**
      * The attributes that should be hidden for serialization.

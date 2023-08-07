@@ -1,5 +1,6 @@
 import React from "react";
-import { Logo as LogoImage } from '../media/images';
+import { Logo as LogoImage } from '../components/media/images';
+
 import { APP_NAME } from "../constants/env-variables";
 
 const Logo = () => {

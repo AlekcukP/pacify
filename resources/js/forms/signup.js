@@ -68,6 +68,11 @@ const SignupForm = () => {
     // }, [formErrors]);
 
 
+    const signupPasswordForm = {
+        
+    };
+
+
     return <Form className='my-8' onSubmit={handleSubmit(onSuccess, onError)}>
         <Input
             className='my-4'
