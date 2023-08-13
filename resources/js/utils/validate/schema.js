@@ -1,73 +1,11 @@
-import Validator from '../validator';
 import _ from 'lodash';
-
-class SchemaFieldProperties {
-    static TYPE_REPLACMENTS = {
-        "numeric": "number",
-        "nullable": "null"
-    };
-
-    static STRING_VALUES_REPLACEMENTS = {
-        "min": "minLength",
-        "max": "maxLength"
-    };
-
-    #rules;
-    type;
-
-    constructor(fieldRules) {
-        this.#rules = this.formatRules(fieldRules, SchemaFieldProperties.TYPE_REPLACMENTS);;
-        this.type = this.extractType();
-
-        this.setFormatIfProvided();
-        this.cleanRules();
-        this.defineProperties();
-    }
-
-    extractType() {
-        return _.nth(_.intersection(Object.values(Schema.validTypes), this.#rules)) ?? Schema.validTypes.string;
-    }
-
-    setFormatIfProvided() {
-        const format = this.extractFormat();
-
-        if (format) {
-            this.format = format;
-        }
-    }
-
-    extractFormat() {
-        const [format] = _.intersection(Validator.formats, this.#rules);
-        return format;
-    }
-
-    defineProperties() {
-        const rules = this.formatRules(this.#rules, SchemaFieldProperties.STRING_VALUES_REPLACEMENTS);
-
-        _.forEach(rules, (rule) => {
-            const [ruleName, ruleValue] = _.split(rule, ':');
-
-            this[ruleName] = +ruleValue || ruleValue;
-        });
-    }
-
-    cleanRules() {
-        _.pull(this.#rules, this.type, this.format, Schema.validProperties.required);
-    }
-
-    formatRules(rules, replacements) {
-        return _.map(rules, (rule) => {
-            _.each(replacements, (replacement, pattern) => {
-                rule = _.startsWith(rule, pattern) ? _.replace(rule, pattern, replacement) : rule
-            })
-
-            return rule;
-        });
-    }
-}
+import SchemaFieldProperties from './schema-field-properties';
 
 class Schema {
+    #name;
     #rules;
+    #rulesErrorMessages;
+
     type;
     required;
     properties;
@@ -75,19 +13,39 @@ class Schema {
     patternProperties;
     additionalProperties;
 
-    constructor(rulesSchema, errorMessages = {}, options = {}) {
-        if (_.isEmpty(rulesSchema)) {
-            throw new Error("Schema object is empty");
-        }
-
-        this.#rules = rulesSchema;
+    constructor(rulesSchemeCollection, options = {}) {
+        this.defineRulesSchemeProperties(rulesSchemeCollection);
 
         this.type = Schema.validTypes.object;
         this.required = this.extractRequiredFields();
         this.properties = this.defineFieldProperties();
-        this.errorMessage = errorMessages;
+        this.errorMessage = {
+            properties: { ...this.getRulesErrorMessages() }
+        };
         this.patternProperties = {};
         this.additionalProperties = false;
+    }
+
+    defineRulesSchemeProperties(rulesScheme) {
+        this.#name = rulesScheme.get("scheme");
+        this.#rules = rulesScheme.get("rules");
+        this.#rulesErrorMessages = rulesScheme.get("errorMessages") || {};
+    }
+
+    compile() {
+        return { ...this };
+    }
+
+    getFields() {
+        return _.keys(this.properties);
+    }
+
+    getName() {
+        return this.#name;
+    }
+
+    getRulesErrorMessages() {
+        return this.#rulesErrorMessages;
     }
 
     extractRequiredFields() {
@@ -95,12 +53,11 @@ class Schema {
     }
 
     defineFieldProperties() {
-        return _.reduce(this.#rules, (properties, fieldRules, fieldName) => {
-            return {
-                ...properties,
-                [fieldName]: { ...new SchemaFieldProperties(fieldRules) }
-            };
-        }, {});
+        return _.reduce(
+            this.#rules,
+            (fieldProps, fieldRules, fieldName) => _.merge(fieldProps, {[fieldName] : { ...new SchemaFieldProperties(fieldRules)}}),
+            {}
+        );
     }
 }
 
@@ -118,6 +75,4 @@ Schema.validProperties = {
     required: 'required'
 };
 
-export default function compileSchema(rulesSchema, errorMessages = {}) {
-    return { ... new Schema(rulesSchema, errorMessages) };
-};
+export default Schema;

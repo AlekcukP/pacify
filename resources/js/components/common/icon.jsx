@@ -2,17 +2,11 @@ import React, { Children } from 'react';
 import { IconContext } from "react-icons";
 import PropTypes from 'prop-types';
 
-// const Wrapper = ({ children, color, style, className, size, onClick }) => {
-//     return <div className={className} style={style} onClick={onClick}>
-//         {React.cloneElement(Children.only(children), {size, color})}
-//     </div>;
-// };
-
-const Icon = ({ children, color, style, className, size, onClick, component: IconComponent }) => {
+const Icon = ({ children, color, style, className, size, onClick, component: Icon }) => {
     return <IconContext.Provider value={{ color, size }}>
         <div className={className} style={style} onClick={onClick}>
-            <IconComponent />
-        </div>;
+            <Icon />
+        </div>
     </IconContext.Provider>;
 };
 

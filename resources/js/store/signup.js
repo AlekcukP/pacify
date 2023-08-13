@@ -4,10 +4,6 @@ const signupSlice = createSlice({
     name: 'signup',
     initialState: {
         strategy: "",
-        form: {
-            values: {},
-            errors: {}
-        },
     },
     reducers: {
         setSignupStrategy: (state, action) => {
@@ -16,22 +12,12 @@ const signupSlice = createSlice({
                 strategy: action.payload
             }
         },
-        setFormState: (state, action) => {
-            return {
-                ...state,
-                formData: {
-                    ...action.payload.data
-                },
-                formErrors: {
-                    ...action.payload.errors
-                }
-            }
-        },
-        submitForm: (action) => {
 
+        submitForm: (state, action) => {
+            console.log(action.payload)
         }
     }
 });
 
 export default signupSlice.reducer;
-export const { setSignupStrategy, setFormState, setFormData, submitForm, setShowPassword } = signupSlice.actions;
+export const { setSignupStrategy, submitForm } = signupSlice.actions;

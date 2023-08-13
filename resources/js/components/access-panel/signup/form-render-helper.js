@@ -1,8 +1,8 @@
 import _ from 'lodash';
+import Input from '../../common/forms/input';
 
-
-class SchemaUtils {
-    static getInputType(fieldName) {
+const fieldRenderHelper = {
+    inputType(fieldName) {
         const patterns = [
             { pattern: '^.*email$', value: 'email' },
             { pattern: '^.*password$', value: 'password' },
@@ -10,14 +10,14 @@ class SchemaUtils {
 
         const matchingPattern = patterns.find(patternObj => new RegExp(patternObj.pattern, 'i').test(fieldName));
 
-        return matchingPattern ? matchingPattern.value : "text";
-    }
+        return matchingPattern ? matchingPattern.value : Input.validTypes.text;
+    },
 
-    static getLabelName(fieldName) {
+    labelName(fieldName) {
         return _.startCase(fieldName.replace(/_/g, ' '));
-    }
+    },
 
-    static getInputClassName(fieldName) {
+    classNames(fieldName) {
         const patterns = [
             { pattern: '^.*name$', value: 'col-span-1' },
         ];
@@ -26,6 +26,6 @@ class SchemaUtils {
 
         return matchingPattern ? matchingPattern.value : 'col-span-2';
     }
-}
+};
 
-export default SchemaUtils;
+export default fieldRenderHelper;

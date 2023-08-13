@@ -3,32 +3,13 @@ import Ajv from 'ajv';
 import addErrors from 'ajv-errors';
 import addKeywords from 'ajv-keywords';
 import addFormats from "ajv-formats";
-
-import compileSchema from './validate/schema';
-
 class Validator {
-    static customKeywords = [
-        {
-            keyword: 'same',
-            type: 'string',
-            schema: true,
-            validate: function (schema, data, parentSchema, dataCxt) {
-                return _.isEqual(dataCxt.parentData[schema], data)
-            },
-            error: {
-                message: (context) => {
-                    return `Should be equal to ${_.upperFirst(context.schema)} field`
-                }
-            }
-        }
-    ];
-
-    constructor(scheme, errorMessages = {}) {
+    constructor(scheme) {
         if (_.isEmpty(scheme)) {
             throw new Error("Scheme not found.");
         }
 
-        this.scheme = compileSchema(scheme, errorMessages);
+        this.scheme = scheme;
 
         this.validateLib = new Ajv({
             allErrors: true,
@@ -48,7 +29,7 @@ class Validator {
     }
 
     addCustomKeywords() {
-        _.each(Validator.customKeywords, keyword => this.validateLib.addKeyword(keyword));
+        _.each(Validator.keywords, keyword => this.validateLib.addKeyword(keyword));
     }
 
     errors() {
@@ -57,5 +38,20 @@ class Validator {
 }
 
 Validator.formats = ['email', 'password'];
+Validator.keywords = [
+    {
+        keyword: 'same',
+        type: 'string',
+        schema: true,
+        validate: function (schema, data, parentSchema, dataCxt) {
+            return _.isEqual(dataCxt.parentData[schema], data)
+        },
+        error: {
+            message: (context) => {
+                return `Should be equal to ${_.upperFirst(context.schema)} field`
+            }
+        }
+    }
+];
 
 export default Validator;

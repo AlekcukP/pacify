@@ -1,29 +1,44 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
+import _ from 'lodash';
+import { Field, reduxForm } from 'redux-form/immutable';
+
+import Form from '../../common/forms/button';
 import Divider from '../../common/divider';
 import Button from '../../common/forms/button';
 import Input from '../../common/forms/input';
 import { Facebook } from "../common/icons";
 import { Google } from "../common/icons";
 
-const Form = () => {
-    const [email, setEmail] = useState('');
+import lookupFormScheme from './form-scheme';
+import Validator from "../../../utils/validator";
+import Scheme from "../../../utils/validate/schema";
+
+const scheme = new Scheme(lookupFormScheme);
+
+const LookupForm = ({ handleSubmit, pristine, reset, submitting }) => {
+
+    // const inputs = _.reduce(scheme.properties, (formAcc, val, key) => {
+    //     return _.concat(formAcc,
+    //         <Field
+    //             name={key}
+    //             type={key}
+    //             label={"Email"}
+    //             placeholder={"Email"}
+    //             component={(props) => <Input
+    //                 { ...props }
+    //                 className="mb-2"
+    //             />}
+    //         />
+    //     );
+    // }, []);
 
     return <Fragment>
-        <div>
-            <Input
-                className="mb-2"
-                label="Email"
-                type="email"
-                value={email}
-                onChange={(val) => setEmail(val)}
-                required={true}
-                placeholder={"Email"}
-            />
-
+        <Form onSubmit={handleSubmit}>
+            {/* { inputs } */}
             <Button className="btn-primary" onClick={() => console.log('continue with email')}>
                 Continue with Email
             </Button>
-        </div>
+        </Form>
 
         <Divider margin={4} text={"or"}/>
 
@@ -40,4 +55,6 @@ const Form = () => {
     </Fragment>
 };
 
-export default Form;
+export default reduxForm({
+    form: scheme.getName()
+})(LookupForm);

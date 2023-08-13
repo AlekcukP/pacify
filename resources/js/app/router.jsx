@@ -6,31 +6,31 @@ import { ROUTES } from './routes';
 import AccessPanel from '../layouts/access-panel';
 import Dashboard from '../layouts/dashboard';
 
-import Lookup from '../components/access-panel/lookup/page';
-import Signup from '../components/access-panel/signup/page';
+import LookupPage from '../components/access-panel/lookup/page';
+import SignupPage from '../components/access-panel/signup/page';
 
-import Home from '../components/dashboard/home';
-import Analytics from '../components/dashboard/home';
-import Discounts from '../components/dashboard/discounts';
-import Marketing from '../components/dashboard/marketing';
-import Customers from '../components/dashboard/customers';
-import Segments from '../components/dashboard/segments';
+import HomePage from '../components/dashboard/home';
+import AnalyticsPage from '../components/dashboard/home';
+import DiscountsPage from '../components/dashboard/discounts';
+import MarketingPage from '../components/dashboard/marketing';
+import CustomersPage from '../components/dashboard/customers';
+import SegmentsPage from '../components/dashboard/segments';
 
 const Router = () => {
     return <BrowserRouter>
         <Routes>
             <Route element={<AccessPanel />}>
-                <Route path={ROUTES.LOOKUP} element={<Lookup />} />
-                <Route path={ROUTES.SIGNUP} element={<Signup />} />
+                <Route path={ROUTES.LOOKUP} element={<LookupPage />} />
+                <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
             </Route>
 
             <Route element={<Dashboard />}>
-                <Route path={ROUTES.BASE} element={<Home />} />
-                <Route path={ROUTES.ANALYTICS} element={<Analytics />} />
-                <Route path={ROUTES.DISCOUNTS} element={<Discounts />} />
-                <Route path={ROUTES.MARKETING} element={<Marketing />} />
-                <Route path={ROUTES.CUSTOMERS} element={<Customers />} />
-                <Route path={ROUTES.SEGMENTS} element={<Segments />} />
+                <Route path={ROUTES.BASE} element={<HomePage />} />
+                <Route path={ROUTES.ANALYTICS} element={<AnalyticsPage />} />
+                <Route path={ROUTES.DISCOUNTS} element={<DiscountsPage />} />
+                <Route path={ROUTES.MARKETING} element={<MarketingPage />} />
+                <Route path={ROUTES.CUSTOMERS} element={<CustomersPage />} />
+                <Route path={ROUTES.SEGMENTS} element={<SegmentsPage />} />
             </Route>
         </Routes>
     </BrowserRouter>

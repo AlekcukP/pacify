@@ -1,31 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import _ from 'lodash';
+import { ReduxFormContext, Form } from 'redux-form';
+// import Validator from '../../../utils/validator';
 
-const Form = ({ onSubmit, style, className, children, name, id }) => {
-    return <form
-        onSubmit={onSubmit}
-        style={style}
-        className={className}
-        name={name}
-        id={id}
-    >
-        { children }
-    </form>
+const FormContext = props => {
+    const reduxForm = React.useContext(ReduxFormContext);
+
+    return (
+        <ReduxFormContext.Provider
+            {...props}
+            value={{ ...reduxForm }}
+        />
+    );
 };
 
-Form.propTypes = {
-    onSubmit: PropTypes.func,
-    style: PropTypes.object,
-    className: PropTypes.string,
-    name: PropTypes.string,
-    id: PropTypes.string,
+const FormComponent = (props) => {
+    const { children } = props;
+    return <FormContext>
+        <Form {...props}>
+            { children }
+        </Form>
+    </FormContext>;
 };
 
-Form.defaultProps = {
-    style: {},
-    className: '',
-    name: null,
-    id: null,
-};
+// FormComponent.validator = Validator ???
 
-export default Form;
+export default FormComponent
+

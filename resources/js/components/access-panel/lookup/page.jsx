@@ -4,15 +4,15 @@ import { ROUTES } from "../../../app/routes";
 import Logo from "../../common/logo";
 import Header from "../common/header";
 import Footer from "../common/footer";
-import Form from "./form";
+import LookupForm from "./form";
 
-const Lookup = () => {
+const LookupPage = () => {
     return <Fragment>
         <Logo />
 
         <Header title={"Log in"} subtext={`Continue to ${__APP_NAME__}`}/>
 
-        <Form />
+        <LookupForm />
 
         <div className='text-sm font-light'>
             <span>New to {__APP_NAME__}?</span>
@@ -23,4 +23,4 @@ const Lookup = () => {
     </Fragment>;
 };
 
-export default Lookup;
+export default LookupPage;

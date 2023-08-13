@@ -1,5 +1,5 @@
 import React from "react";
-import { Logo as LogoImage } from './images';
+import { LogoImage } from './images';
 
 const Logo = () => {
     return <h1 className="h-fit">

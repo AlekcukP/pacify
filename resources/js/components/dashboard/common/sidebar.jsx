@@ -49,7 +49,7 @@ const MenuTab = ({path, label, icon = null }) => {
     </MenuItem>
 };
 
-const Sidebar = () => {
+const DashboardSidebar = () => {
     const { pathname: currentPath } = useLocation();
 
     return <SidebarMenu currentPath={currentPath}>
@@ -62,3 +62,5 @@ const Sidebar = () => {
         <MenuTab path={ROUTES.DISCOUNTS} label={"Discounts"} icon={<Discount />}/>
     </SidebarMenu>;
 };
+
+export default DashboardSidebar;
