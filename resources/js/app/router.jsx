@@ -1,24 +1,25 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { ROUTES } from '../constants/routes';
+import { ROUTES } from './routes';
 
-import Interactive from '../templates/interactive';
-import Dashboard from '../templates/dashboard';
+import AccessPanel from '../layouts/access-panel';
+import Dashboard from '../layouts/dashboard';
 
-import Lookup from '../pages/lookup';
-import Signup from '../pages/signup';
-import Home from '../pages/dashboard/home';
-import Analytics from '../pages/dashboard/analytics';
-import Discounts from '../pages/dashboard/discounts';
-import Marketing from '../pages/dashboard/marketing';
-import Customers from '../pages/dashboard/customers';
-import Segments from '../pages/dashboard/segments';
+import Lookup from '../components/access-panel/lookup/page';
+import Signup from '../components/access-panel/signup/page';
+
+import Home from '../components/dashboard/home';
+import Analytics from '../components/dashboard/home';
+import Discounts from '../components/dashboard/discounts';
+import Marketing from '../components/dashboard/marketing';
+import Customers from '../components/dashboard/customers';
+import Segments from '../components/dashboard/segments';
 
 const Router = () => {
     return <BrowserRouter>
         <Routes>
-            <Route element={<Interactive />}>
+            <Route element={<AccessPanel />}>
                 <Route path={ROUTES.LOOKUP} element={<Lookup />} />
                 <Route path={ROUTES.SIGNUP} element={<Signup />} />
             </Route>

@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import signupReducer from './interactive/signup';
+import signupReducer from './signup';
+import commonReducer from './common';
 
 const store = configureStore({
     reducer: {
-        signup: signupReducer
+        signup: signupReducer,
+        common: commonReducer
     }
 })
 

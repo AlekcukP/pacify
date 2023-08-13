@@ -1,14 +1,13 @@
 import React from 'react';
 import Provider from './provider';
 import Router from './router';
-import FullScreen from "../templates/full-screen";
 
 const App = () => {
     return <React.StrictMode>
         <Provider>
-            <FullScreen>
+            <div className='h-screen w-screen'>
                 <Router />
-            </FullScreen>
+            </div>
         </Provider>
     </React.StrictMode>
 }
