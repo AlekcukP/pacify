@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SignupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::put('/signup/create', [SignupController::class, 'create']);
+
 Route::view('/{path?}', 'index')
     ->where('path', '.*')
     ->name('react');
 
-    // Route::get( '/{path?}', function(){
-    //     return view( 'view' );
-    // } )->where('path', '.*');

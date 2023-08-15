@@ -4,17 +4,15 @@ import classNames from 'classnames';
 import PasswordVisibilitySwitch from './password-visibility-switch';
 import { Exclamation } from './icons';
 
-const Input = ({ label, type, className, input, placeholder, value, onChange, onBlur, name, meta, ref }) => {
-    const { touched, error, valid } = meta;
-
-    const Error = () => <p className="flex items-center text-red-600 text-sm absolute">
-        <Exclamation className="mr-2"/>
-        <span>{error.message}</span>
+const Input = ({ label, type, className, placeholder, input: { value, onChange, onBlur, name }, meta: { touched, error, valid } }) => {
+    const Error = () => <p className="flex items-center text-red-600 tracking-[-.075em] text-xs absolute">
+        <Exclamation className="mr-1"/>
+        <span>{error}</span>
     </p>;
 
     return (
         <div className={classNames(className, {
-            "mb-6": !valid && error && touched
+            "mb-3": !valid && error && touched
         })}>
             {label && <span className='text-gray-700 text-sm mb-1.5'>{label}</span>}
             <div className='relative h-12'>
@@ -22,7 +20,10 @@ const Input = ({ label, type, className, input, placeholder, value, onChange, on
                     className={`input-${type}`}
                     type={type}
                     placeholder={placeholder}
-                    {...input}
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    onBlur={onBlur}
                 />
                 {type === Input.validTypes.password && <PasswordVisibilitySwitch />}
             </div>

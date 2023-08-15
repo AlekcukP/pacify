@@ -2,14 +2,16 @@
 
 namespace App\Http\Requests;
 
-class SignupFormRequest extends FormRequest
+use App\Http\Requests\FormRequest;
+
+class SignupRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,7 +28,6 @@ class SignupFormRequest extends FormRequest
             'first_name.max' => 'First name length exceeds the maximum limit.',
             'last_name.max' => 'Last name length exceeds the maximum limit.',
             'required' => 'Field is required.',
-            'password.min' => 'Password must be at least 8 characters long.',
             'confirm_password.same' => 'Confirm password must match the password.',
         ];
     }
@@ -36,14 +37,14 @@ class SignupFormRequest extends FormRequest
     *
     * @return array
     */
-    public function view_rules()
+    public function rules()
     {
         return [
-            'email' => 'required|email|max:255',
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'password' => 'required|min:8',
-            'confirm_password' => 'required|same:password',
+            'email' => ['required', 'email', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255', 'min:3'],
+            'last_name' => ['required', 'string', 'max:255', 'min:3'],
+            'password' => ['required', 'password'],
+            'confirm_password' => ['required', 'same:password'],
         ];
     }
 }

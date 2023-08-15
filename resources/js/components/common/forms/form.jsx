@@ -16,6 +16,7 @@ const FormContext = props => {
 
 const FormComponent = (props) => {
     const { children } = props;
+
     return <FormContext>
         <Form {...props}>
             { children }

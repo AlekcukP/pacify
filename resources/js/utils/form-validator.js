@@ -21,6 +21,7 @@ export default function formValidator(scheme) {
         _.forEach(errors, (error) => {
             if (error.keyword === 'required') {
                 error.instancePath += '/' + error.params.missingProperty;
+                error.message = 'Field is required.';
             }
         });
 
@@ -28,10 +29,12 @@ export default function formValidator(scheme) {
             const path = error.instancePath.substring(1).replace(/\//g, '.');
 
             if (!previous[path]) {
-                previous[path] = {
-                    message: error.message,
-                    type: error.keyword,
-                };
+                previous[path] = error.message;
+
+                // previous[path] = {
+                //     message: error.message,
+                //     type: error.keyword,
+                // };
             }
 
             return previous;

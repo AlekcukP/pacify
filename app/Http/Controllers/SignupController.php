@@ -2,28 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SignupFormRequest;
-use App\Http\Controllers\FormController;
+use App\Http\Requests\SignupRequest;
 
 
-class SignupFormController extends FormController
+class SignupController extends Controller
 {
-    public function create()
+    public function create(SignupRequest $request)
     {
-        // $request->validated();
 
-        // $request->validated();
+        $data = $request->safe()->all();
 
-        // if (!$request->validated()) {
-        //     return response('', 422)->withErrors()
-        //             ->withInput();
-        // }
-
-        // $formData = $request->safe()->all();
-
-        // return response()->json([
-        //     'formData' => $formData,
-        //     'rules' => $request->view_rules()
-        // ]);
+        return response()->json([
+            'formData' => $data,
+            'rules' => $request->rules()
+        ]);
     }
 }

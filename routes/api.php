@@ -19,4 +19,4 @@ use App\Http\Controllers\SignupController;
 //     return $request->user();
 // });
 
-Route::post('/signup/password', [SignupController::class, 'create']);
+Route::put('/signup/create', [SignupController::class, 'create']);

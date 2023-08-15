@@ -1,8 +1,7 @@
-import React, { useCallback } from "react";
+import React from "react";
 import _ from 'lodash';
-import { reduxForm } from 'redux-form';
-import { useDispatch } from 'react-redux';
-import { submitForm } from "../../../store/signup";
+import { reduxForm, SubmissionError} from 'redux-form';
+import { createUser } from "../../../store/signup";
 
 import Form from "../../common/forms/form";
 import Button from '../../common/forms/button';
@@ -16,20 +15,23 @@ import fieldRenderHelper from "./form-render-helper";
 
 const scheme = new Schema(signupFormScheme);
 
-const SignupForm = ({ handleSubmit }) => {
-    const dispatch = useDispatch();
-
-    const submitSignupForm = useCallback((payload) => dispatch(submitForm(payload)), []);
-
-    return <Form className='grid grid-cols-2 grid-rows-5 gap-y-2 gap-x-1' onSubmit={handleSubmit(submitSignupForm)}>
-            <FormFields />
-            <Button className="btn-primary col-span-2 h-12" type="submit">Create an Account</Button>
-        </Form>
+const SignupForm = ({ handleSubmit, invalid, pristine }) => {
+    return <Form className='grid grid-cols-2 grid-rows-5 gap-y-2 gap-x-1' onSubmit={handleSubmit}>
+        <FormFields />
+        <Button className="btn-primary col-span-2 h-12" type="submit" disabled={pristine}>Create an Account</Button>
+    </Form>
 };
 
 export default reduxForm({
     form: scheme.getName(),
     validate: formValidator(scheme.compile()),
+    onSubmit: async (values, dispatch) => {
+        const res =  await dispatch(createUser(values));
+
+        if (!res.meta.condition) {
+            throw new SubmissionError(res.payload.errors);
+        }
+    },
     enableReinitialize: false,
     keepDirtyOnReinitialize: false,
     touchOnChange: false,
