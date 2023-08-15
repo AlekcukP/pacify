@@ -5,6 +5,10 @@ import Logo from "../../common/logo";
 import Header from "../common/header";
 import Footer from "../common/footer";
 import LookupForm from "./form";
+import Button from '../../common/forms/button';
+import Divider from '../../common/divider';
+import { Facebook } from "../common/icons";
+import { Google } from "../common/icons";
 
 const LookupPage = () => {
     return <Fragment>
@@ -14,9 +18,22 @@ const LookupPage = () => {
 
         <LookupForm />
 
+        <Divider margin={4} text={"or"}/>
+
+        <div>
+            <Button className='btn-bordered' onClick={() => console.log('google sign up')}>
+                <Google className='mr-3'/>
+                <span>Continue with Google</span>
+            </Button>
+            <Button className='btn-bordered my-4' onClick={() => console.log('facebook sign up')}>
+                <Facebook className='mr-3'/>
+                <span>Continue with Facebook</span>
+            </Button>
+        </div>
+
         <div className='text-sm font-light'>
-            <span>New to {__APP_NAME__}?</span>
-            <Link to={ROUTES.SIGNUP} className='link'> Get started </Link>
+            <span>New to {__APP_NAME__}?</span>&nbsp;
+            <Link to={ROUTES.SIGNUP} className='link'>Get started</Link>
         </div>
 
         <Footer />

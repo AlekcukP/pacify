@@ -7,7 +7,7 @@ class SignupService extends BaseService {
     }
 
     async create(userData) {
-        return await this.put('/api/signup/create', userData);
+        return await this.post('/register', userData);
     }
 }
 

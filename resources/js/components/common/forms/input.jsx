@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import PasswordVisibilitySwitch from './password-visibility-switch';
 import { Exclamation } from './icons';
@@ -10,15 +9,19 @@ const Input = ({ label, type, className, placeholder, input: { value, onChange, 
         <span>{error}</span>
     </p>;
 
+    const labelSign = _.isString(label) || label === false ? label : Input.nameToLabel(name);
+    const inputType = type ?? Input.getTypeByName(name);
+    const inputClassName = `input-${inputType}`;
+
     return (
         <div className={classNames(className, {
             "mb-3": !valid && error && touched
         })}>
-            {label && <span className='text-gray-700 text-sm mb-1.5'>{label}</span>}
+            {labelSign && <span className='text-gray-700 text-sm mb-1.5'>{labelSign}</span>}
             <div className='relative h-12'>
                 <input
-                    className={`input-${type}`}
-                    type={type}
+                    className={inputClassName}
+                    type={inputType}
                     placeholder={placeholder}
                     value={value}
                     onChange={onChange}
@@ -38,28 +41,14 @@ Input.validTypes = {
     password: 'password'
 };
 
-Input.propTypes = {
-    value: PropTypes.string,
-    onChange: PropTypes.func,
-    label: PropTypes.string,
-    error: PropTypes.string,
-    type: PropTypes.oneOf(Object.values(Input.validTypes)),
-    placeholder: PropTypes.string,
-    required: PropTypes.bool,
-    className: PropTypes.string,
-    name: PropTypes.string,
-    id: PropTypes.string
+Input.nameToLabel = (name) => {
+    return _.startCase(name.replace(/_/g, ' '));
 };
 
-Input.defaultProps = {
-    type: Input.validTypes.text,
-    required: false,
-    label: '',
-    error: '',
-    placeholder: '',
-    className: '',
-    name: null,
-    id: null,
+Input.getTypeByName = (name) => {
+    const startsWithMatch = _.find(Input.validTypes, type => _.startsWith(type, name));
+
+    return startsWithMatch || Input.validTypes.text;
 };
 
 export default Input;

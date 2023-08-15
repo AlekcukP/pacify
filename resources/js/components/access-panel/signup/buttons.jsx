@@ -5,7 +5,7 @@ import { Google } from "../common/icons";
 import { Facebook } from "../common/icons";
 
 import { useDispatch } from 'react-redux';
-import { setSignupStrategy } from "../../../store/signup";
+import { setSignupStrategy } from "../../../store/auth";
 
 const Buttons = () => {
     const dispatch = useDispatch();

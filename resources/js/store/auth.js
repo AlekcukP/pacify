@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import SignupAPI from '../services/signup';
 
 const signupSlice = createSlice({
-    name: 'signup',
+    name: 'auth',
 
     initialState: {
         isLoading: false,
@@ -40,7 +40,7 @@ const signupSlice = createSlice({
 });
 
 export const createUser = createAsyncThunk(
-    'signup/create',
+    'auth/register',
     async (data, { rejectWithValue }) => {
         try {
             const response = await SignupAPI.create(data);

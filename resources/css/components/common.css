@@ -14,6 +14,10 @@
     }
 }
 
+a {
+    @apply hover:underline;
+}
+
 .link {
     @apply text-sky-500;
 }

@@ -1,60 +1,39 @@
-import React, { Fragment } from "react";
+import React from "react";
 import _ from 'lodash';
-import { Field, reduxForm } from 'redux-form/immutable';
+import { reduxForm } from 'redux-form';
 
-import Form from '../../common/forms/button';
-import Divider from '../../common/divider';
+import Form from "../../common/forms/form";
+import FormFields from '../../common/forms/form-fields';
 import Button from '../../common/forms/button';
-import Input from '../../common/forms/input';
-import { Facebook } from "../common/icons";
-import { Google } from "../common/icons";
 
+import formValidator from "../../../utils/form-validator";
 import lookupFormScheme from './form-scheme';
-import Validator from "../../../utils/validator";
-import Scheme from "../../../utils/validate/schema";
+import Schema from "../../../utils/validate/schema";
 
-const scheme = new Scheme(lookupFormScheme);
+const scheme = new Schema(lookupFormScheme);
 
 const LookupForm = ({ handleSubmit, pristine, reset, submitting }) => {
-
-    // const inputs = _.reduce(scheme.properties, (formAcc, val, key) => {
-    //     return _.concat(formAcc,
-    //         <Field
-    //             name={key}
-    //             type={key}
-    //             label={"Email"}
-    //             placeholder={"Email"}
-    //             component={(props) => <Input
-    //                 { ...props }
-    //                 className="mb-2"
-    //             />}
-    //         />
-    //     );
-    // }, []);
-
-    return <Fragment>
-        <Form onSubmit={handleSubmit}>
-            {/* { inputs } */}
-            <Button className="btn-primary" onClick={() => console.log('continue with email')}>
-                Continue with Email
-            </Button>
-        </Form>
-
-        <Divider margin={4} text={"or"}/>
-
-        <div>
-            <Button className='btn-bordered' onClick={() => console.log('google sign up')}>
-                <Google className='mr-3'/>
-                <span>Continue with Google</span>
-            </Button>
-            <Button className='btn-bordered my-4' onClick={() => console.log('facebook sign up')}>
-                <Facebook className='mr-3'/>
-                <span>Continue with Facebook</span>
-            </Button>
-        </div>
-    </Fragment>
+    return <Form onSubmit={handleSubmit}>
+        <FormFields />
+        <Button className="btn-primary" type="submit" disabled={pristine}>
+            Continue with Email
+        </Button>
+    </Form>
 };
 
 export default reduxForm({
-    form: scheme.getName()
+    form: scheme.getName(),
+    validate: formValidator(scheme.compile()),
+    // onSubmit: async (values, dispatch) => {
+    //     const res =  await dispatch(createUser(values));
+
+    //     if (!res.meta.condition) {
+    //         throw new SubmissionError(res.payload.errors);
+    //     }
+    // },
+    enableReinitialize: false,
+    keepDirtyOnReinitialize: false,
+    touchOnChange: false,
+    touchOnBlur: false,
+    scheme: scheme,
 })(LookupForm);

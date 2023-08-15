@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const signupSlice = createSlice({
-    name: 'common',
+    name: 'components',
     initialState: {
         passwordVisible: false,
     },

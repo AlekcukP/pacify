@@ -30,6 +30,10 @@ class Schema {
         this.#name = rulesScheme.get("scheme");
         this.#rules = rulesScheme.get("rules");
         this.#rulesErrorMessages = rulesScheme.get("errorMessages") || {};
+
+        if (rulesScheme.has("render")) {
+            this.render = rulesScheme.get("render");
+        }
     }
 
     compile() {

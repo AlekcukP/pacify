@@ -4,13 +4,11 @@ import { Fields, ReduxFormContext } from 'redux-form';
 import Input from './input';
 
 const renderFields = (fields) => {
-    const { scheme, fieldRenderHelper } = React.useContext(ReduxFormContext);
+    const { scheme } = React.useContext(ReduxFormContext);
 
     return _.map(scheme.properties, (field, name) => {
         return <Input
-            type={fieldRenderHelper ? fieldRenderHelper.inputType(name) : Input.validTypes.text}
-            label={fieldRenderHelper ? fieldRenderHelper.labelName(name) : null}
-            className={fieldRenderHelper && fieldRenderHelper.classNames(name)}
+            className={scheme?.render?.classNames(name) ?? ''}
             name={name}
 
             input={fields[name].input}

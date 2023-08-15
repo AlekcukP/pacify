@@ -3,7 +3,7 @@ import { Eye, InvisisbleEye } from './icons';
 import Input from "./input";
 
 import { useDispatch, useSelector } from 'react-redux';
-import { togglePasswordVisibility } from "../../../store/common";
+import { togglePasswordVisibility } from "../../../store/components";
 
 const PasswordVisibilitySwitch = () => {
     const dispatch = useDispatch();

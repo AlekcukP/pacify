@@ -1,0 +1,22 @@
+.input-text,
+.input-email,
+.input-password {
+    @apply appearance-none leading-tight w-full px-3 py-[0.625rem] border border-gray-500 rounded-lg text-gray-700 focus:border-2 focus:outline-none hover:border-sky-500 focus:border-sky-500;
+}
+
+.input-icon {
+    @apply absolute top-1/2 right-0;
+    transform: translate(-50%, -50%);
+}
+
+.btn-primary {
+    @apply text-sm flex-center cursor-pointer bg-sky-500 hover:bg-sky-600 text-white py-[0.625rem] px-3 rounded-lg focus:outline-none w-full;
+}
+
+.btn-bordered {
+    @apply text-sm flex-center cursor-pointer border border-gray-500 rounded-lg py-[0.625rem] px-3 focus:outline-none w-full hover:bg-gray-100;
+}
+
+.btn-disabled {
+    @apply text-sm flex-center bg-gray-300 cursor-not-allowed border-0 text-gray-600 hover:bg-gray-300 hover:cursor-not-allowed;
+}
