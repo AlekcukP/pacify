@@ -23,7 +23,6 @@ class SignupRequest extends FormRequest
     {
         return [
             'email.email' => 'Please enter a valid email address.',
-            'email.unique' => 'This email is already registered.',
             'email.max' => 'Email length exceeds the maximum limit.',
             'first_name.max' => 'First name length exceeds the maximum limit.',
             'last_name.max' => 'Last name length exceeds the maximum limit.',
@@ -40,7 +39,7 @@ class SignupRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'email', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:App\Models\User,email'],
             'first_name' => ['required', 'string', 'max:255', 'min:3'],
             'last_name' => ['required', 'string', 'max:255', 'min:3'],
             'password' => ['required', 'password'],

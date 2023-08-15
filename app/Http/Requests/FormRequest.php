@@ -27,11 +27,6 @@ class FormRequest extends BaseFormRequest
             'message' => 'Invalid data',
             'errors' => $this->errors()
         ], 422);
-        // $response = response()->json([
-        //     'success' => false,
-        //     'message' => 'Invalid data',
-        //     'errors' => $this->errors()
-        // ]);
 
         throw (new ValidationException($validator, $response))
             ->errorBag($this->errorBag);

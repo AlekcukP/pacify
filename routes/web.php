@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SignupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,8 +12,6 @@ use App\Http\Controllers\SignupController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::put('/signup/create', [SignupController::class, 'create']);
 
 Route::view('/{path?}', 'index')
     ->where('path', '.*')
