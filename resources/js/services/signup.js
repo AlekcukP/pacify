@@ -1,16 +1,20 @@
 import _ from "lodash";
 import BaseService from "./base";
 
-class SignupService extends BaseService {
+class AuthService extends BaseService {
     constructor() {
         super();
     }
 
-    async create(userData) {
+    async register(userData) {
         return await this.post('/register', userData);
+    }
+
+    async login(userData) {
+        return await this.post('/login', userData);
     }
 }
 
-const SignupAPI = new SignupService;
+const AuthAPI = new AuthService;
 
-export default SignupAPI;
+export default AuthAPI;

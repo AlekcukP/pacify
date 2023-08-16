@@ -4,7 +4,7 @@ import PasswordVisibilitySwitch from './password-visibility-switch';
 import { Exclamation } from './icons';
 
 const Input = ({ label, type, className, placeholder, input: { value, onChange, onBlur, name }, meta: { touched, error, valid } }) => {
-    const Error = () => <p className="flex items-center text-red-600 tracking-[-.075em] text-xs absolute">
+    const Error = () => <p className="flex items-center text-red-600 tracking-[-.075em] text-xs absolute leading-none -bottom-3">
         <Exclamation className="mr-1"/>
         <span>{error}</span>
     </p>;
@@ -14,11 +14,11 @@ const Input = ({ label, type, className, placeholder, input: { value, onChange, 
     const inputClassName = `input-${inputType}`;
 
     return (
-        <div className={classNames(className, {
-            "mb-3": !valid && error && touched
+        <div className={classNames(className, 'relative', {
+            "mb-2": !valid && error && touched
         })}>
             {labelSign && <span className='text-gray-700 text-sm mb-1.5'>{labelSign}</span>}
-            <div className='relative h-12'>
+            <div className='relative h-11'>
                 <input
                     className={inputClassName}
                     type={inputType}
@@ -28,7 +28,7 @@ const Input = ({ label, type, className, placeholder, input: { value, onChange, 
                     name={name}
                     onBlur={onBlur}
                 />
-                {type === Input.validTypes.password && <PasswordVisibilitySwitch />}
+                {inputType === Input.validTypes.password && <PasswordVisibilitySwitch />}
             </div>
             {touched && error && <Error />}
         </div>
@@ -46,9 +46,7 @@ Input.nameToLabel = (name) => {
 };
 
 Input.getTypeByName = (name) => {
-    const startsWithMatch = _.find(Input.validTypes, type => _.startsWith(type, name));
-
-    return startsWithMatch || Input.validTypes.text;
+    return _.find(Input.validTypes, type => _.includes(name, type)) || Input.validTypes.text;
 };
 
 export default Input;

@@ -30,11 +30,6 @@ export default function formValidator(scheme) {
 
             if (!previous[path]) {
                 previous[path] = error.message;
-
-                // previous[path] = {
-                //     message: error.message,
-                //     type: error.keyword,
-                // };
             }
 
             return previous;

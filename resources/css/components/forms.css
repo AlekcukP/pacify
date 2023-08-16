@@ -5,7 +5,7 @@
 }
 
 .input-icon {
-    @apply absolute top-1/2 right-0;
+    @apply absolute top-[45%] right-0;
     transform: translate(-50%, -50%);
 }
 

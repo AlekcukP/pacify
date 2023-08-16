@@ -1,13 +1,11 @@
 import React from "react";
 import _ from 'lodash';
-import { reduxForm, SubmissionError} from 'redux-form';
-import { createUser } from "../../../store/auth";
+import { register } from "../../../store/auth";
 
-import Form from "../../common/forms/form";
+import Form , { createForm } from "../../common/forms/form";
 import Button from '../../common/forms/button';
 import FormFields from "../../common/forms/form-fields";
 
-import formValidator from "../../../utils/form-validator";
 import signupFormScheme from './form-scheme';
 import Schema from "../../../utils/validate/schema";
 
@@ -20,19 +18,4 @@ const SignupForm = ({ handleSubmit, invalid, pristine }) => {
     </Form>
 };
 
-export default reduxForm({
-    form: scheme.getName(),
-    validate: formValidator(scheme.compile()),
-    onSubmit: async (values, dispatch) => {
-        const res =  await dispatch(createUser(values));
-
-        if (!res.meta.condition) {
-            throw new SubmissionError(res.payload.errors);
-        }
-    },
-    scheme: scheme,
-    enableReinitialize: false,
-    keepDirtyOnReinitialize: false,
-    touchOnChange: false,
-    touchOnBlur: false,
-})(SignupForm);
+export default createForm(scheme, register)(SignupForm);

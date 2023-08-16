@@ -11,5 +11,5 @@ export default Collection({
     errorMessages: {
         email: "Invalid email address.",
         password: "Password incorrect.",
-}
+    },
 });

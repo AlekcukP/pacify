@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import SignupAPI from '../services/signup';
+import AuthAPI from '../services/signup';
 
 const signupSlice = createSlice({
     name: 'auth',
@@ -21,17 +21,17 @@ const signupSlice = createSlice({
     },
 
     extraReducers: (builder) => {
-        builder.addCase(createUser.pending, (state) => {
+        builder.addCase(register.pending, (state) => {
             state.isLoading = true
         })
 
-        builder.addCase(createUser.fulfilled, (state, action) => {
+        builder.addCase(register.fulfilled, (state, action) => {
             state.isLoading = false
 
             // state.contents = action.payload
         })
 
-        builder.addCase(createUser.rejected, (state, action) => {
+        builder.addCase(register.rejected, (state, action) => {
             state.isLoading = false
 
             // state.error = action.error.message
@@ -39,11 +39,23 @@ const signupSlice = createSlice({
     }
 });
 
-export const createUser = createAsyncThunk(
+export const register = createAsyncThunk(
     'auth/register',
     async (data, { rejectWithValue }) => {
         try {
-            const response = await SignupAPI.create(data);
+            const response = await AuthAPI.register(data);
+            return response.data;
+        } catch (error) {
+            return rejectWithValue({errors: error.response.data.errors});
+        }
+    }
+);
+
+export const login = createAsyncThunk(
+    'auth/login',
+    async (data, { rejectWithValue }) => {
+        try {
+            const response = await AuthAPI.login(data);
             return response.data;
         } catch (error) {
             return rejectWithValue({errors: error.response.data.errors});
