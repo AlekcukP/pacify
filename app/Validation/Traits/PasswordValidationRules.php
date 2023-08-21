@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Actions\Fortify;
+namespace App\Validation\Traits;
 
-use Laravel\Fortify\Rules\Password;
+use App\Validation\Rules\Password;
 
 trait PasswordValidationRules
 {

@@ -1,7 +1,35 @@
 import React from 'react';
 import _ from 'lodash';
-import { ReduxFormContext, Form, reduxForm, SubmissionError } from 'redux-form';
-import formValidator from '../../../utils/form-validator';
+import { ReduxFormContext, Form, reduxForm, Fields, SubmissionError } from 'redux-form';
+import Input from './input';
+import Button from './button';
+import validateApi from '../../../services/validate';
+
+const renderFields = (fields) => {
+    const { formFields } = React.useContext(ReduxFormContext);
+
+    return _.map(formFields, (field) => {
+        return <Input
+            { ...field }
+            input={fields[field.name].input}
+            meta={fields[field.name].meta}
+        />
+    });
+}
+
+const FormFields = () => {
+    const { formFields } = React.useContext(ReduxFormContext);
+    const names = _.map(formFields, 'name');
+
+    return <Fields names={names} component={renderFields}/>
+};
+
+const FormButton = ({ disabled }) => {
+    const { formButton } = React.useContext(ReduxFormContext);
+    const { label, className } = formButton;
+
+    return <Button type={Button.validTypes.submit} className={className} disabled={disabled}>{label}</Button>
+};
 
 const FormContext = props => {
     const reduxForm = React.useContext(ReduxFormContext);
@@ -12,38 +40,35 @@ const FormContext = props => {
     />;
 };
 
-const FormComponent = (props) => {
+const FormContainer = (props) => {
     const { children } = props;
 
     return <FormContext>
         <Form {...props}>
-            { children }
+            { ...children }
         </Form>
     </FormContext>;
 };
 
-// const FormContainer = (props) => {
-//     const { children } = props;
+const FormComponent = ({ handleSubmit, invalid, pristine }) => {
+    const { formClassName } = React.useContext(ReduxFormContext);
 
-//     return <FormComponent {...props}>{ children }</FormComponent>
-// };
+    return <FormContainer className={formClassName} onSubmit={handleSubmit}>
+        <FormFields />
+        <FormButton disabled={pristine}/>
+    </FormContainer>;
+};
 
-export const createForm = (scheme, submitCallback) => {
+export const createForm = (config) => {
+    const { form } = config;
+
     return reduxForm({
-        form: scheme.getName(),
-        scheme: scheme,
-        validate: formValidator(scheme.compile()),
-        onSubmit: async (data, dispatch) => {
-            const res =  await dispatch(submitCallback(data));
-
-            if (!res.meta.condition) {
-                throw new SubmissionError(res.payload.errors);
-            }
+        ...config,
+        shouldAsyncValidate: ({trigger, pristine, initialized}) => {
+            return (trigger === 'blur') || (trigger === 'submit' && (!pristine || !initialized));
         },
-        enableReinitialize: false,
-        keepDirtyOnReinitialize: false,
-        touchOnChange: false,
-        touchOnBlur: false,
+        asyncValidate: async (values) => validateApi.send(form, values),
+        asyncChangeFields: [],
     });
 };
 

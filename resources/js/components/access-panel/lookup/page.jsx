@@ -18,9 +18,9 @@ const LookupPage = () => {
 
         <LookupForm />
 
-        <Divider margin={4} text={"or"}/>
+        <Divider text={"or"}/>
 
-        <div>
+        <div className="mt-6">
             <Button className='btn-bordered' onClick={() => console.log('google sign up')}>
                 <Google className='mr-3'/>
                 <span>Continue with Google</span>

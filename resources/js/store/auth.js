@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import AuthAPI from '../services/signup';
+import AuthAPI from '../services/auth';
+import { SubmissionError, reduxForm } from "redux-form";
 
 const signupSlice = createSlice({
     name: 'auth',
@@ -20,48 +21,35 @@ const signupSlice = createSlice({
         },
     },
 
-    extraReducers: (builder) => {
-        builder.addCase(register.pending, (state) => {
-            state.isLoading = true
-        })
+    // extraReducers: (builder) => {
+    //     builder.addCase(register.pending, (state) => {
+    //         state.isLoading = true
+    //     })
+    //     .addCase(register.fulfilled, (state, action) => {
+    //         state.isLoading = false
+    //         console.log(action, 'action fulfilled')
+    //         // state.contents = action.payload
+    //     })
+    //     .addCase(register.rejected, (state, action) => {
+    //         state.isLoading = false
 
-        builder.addCase(register.fulfilled, (state, action) => {
-            state.isLoading = false
-
-            // state.contents = action.payload
-        })
-
-        builder.addCase(register.rejected, (state, action) => {
-            state.isLoading = false
-
-            // state.error = action.error.message
-        })
-    }
+    //         console.log(action, 'action rej')
+    //         // state.error = action.error.message
+    //     })
+    // }
 });
 
-export const register = createAsyncThunk(
-    'auth/register',
-    async (data, { rejectWithValue }) => {
-        try {
-            const response = await AuthAPI.register(data);
-            return response.data;
-        } catch (error) {
-            return rejectWithValue({errors: error.response.data.errors});
-        }
-    }
-);
-
-export const login = createAsyncThunk(
-    'auth/login',
-    async (data, { rejectWithValue }) => {
-        try {
-            const response = await AuthAPI.login(data);
-            return response.data;
-        } catch (error) {
-            return rejectWithValue({errors: error.response.data.errors});
-        }
-    }
-);
+// export const login = createAsyncThunk(
+//     'auth/login',
+//     async (data, { rejectWithValue }) => {
+//         try {
+//             const response = await AuthAPI.login(data);
+//             return response.data;
+//         } catch (error) {
+//             return rejectWithValue({errors: error.response.data.errors});
+//         }
+//     }
+// );
 
 export default signupSlice.reducer;
 export const { setSignupStrategy } = signupSlice.actions;

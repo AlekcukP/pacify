@@ -1,5 +1,6 @@
 import _ from "lodash";
 import BaseService from "./base";
+import { SubmissionError, reduxForm } from "redux-form";
 
 class AuthService extends BaseService {
     constructor() {
@@ -7,14 +8,14 @@ class AuthService extends BaseService {
     }
 
     async register(userData) {
-        return await this.post('/register', userData);
+        return this.post('/register', userData);
     }
 
     async login(userData) {
-        return await this.post('/login', userData);
+        return this.post('/login', userData);
     }
 }
 
-const AuthAPI = new AuthService;
+const authApi = new AuthService;
 
-export default AuthAPI;
+export default authApi;

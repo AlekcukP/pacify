@@ -1,23 +1,21 @@
 import React from 'react';
-import classNames from 'classnames';
 import PasswordVisibilitySwitch from './password-visibility-switch';
 import { Exclamation } from './icons';
 
 const Input = ({ label, type, className, placeholder, input: { value, onChange, onBlur, name }, meta: { touched, error, valid } }) => {
-    const Error = () => <p className="flex items-center text-red-600 tracking-[-.075em] text-xs absolute leading-none -bottom-3">
+    const Error = () => <p className="flex items-center text-red-600 tracking-[-.075em] text-xs leading-none my-0.5">
         <Exclamation className="mr-1"/>
         <span>{error}</span>
     </p>;
 
-    const labelSign = _.isString(label) || label === false ? label : Input.nameToLabel(name);
+
+    const labelSign = label ?? name;
     const inputType = type ?? Input.getTypeByName(name);
     const inputClassName = `input-${inputType}`;
 
     return (
-        <div className={classNames(className, 'relative', {
-            "mb-2": !valid && error && touched
-        })}>
-            {labelSign && <span className='text-gray-700 text-sm mb-1.5'>{labelSign}</span>}
+        <div className={className}>
+            {labelSign && <span className='text-gray-700 text-sm mb-1.5'>{Input.formatLabel(labelSign)}</span>}
             <div className='relative h-11'>
                 <input
                     className={inputClassName}
@@ -41,7 +39,7 @@ Input.validTypes = {
     password: 'password'
 };
 
-Input.nameToLabel = (name) => {
+Input.formatLabel = (name) => {
     return _.startCase(name.replace(/_/g, ' '));
 };
 

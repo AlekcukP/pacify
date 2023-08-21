@@ -14,23 +14,4 @@ Button.validTypes = {
     submit: 'submit'
 };
 
-Button.propTypes = {
-    onClick: PropTypes.func.isRequired,
-    type: PropTypes.oneOf(Object.values(Button.validTypes)).isRequired,
-    style: PropTypes.object,
-    className: PropTypes.string,
-    disabled: PropTypes.bool,
-    name: PropTypes.string,
-    id: PropTypes.string
-};
-
-Button.defaultProps = {
-    type: 'button',
-    style: {},
-    className: '',
-    disabled: false,
-    name: null,
-    id: null
-};
-
 export default Button;
