@@ -1,15 +1,19 @@
-import React from "react";
 import _ from 'lodash';
 import authApi from "../../../services/auth";
 import { SubmissionError } from "redux-form";
-
 import Form, { createForm } from "../../common/forms/form";
+import { authenticate } from "../../../store/auth";
 
 export default createForm({
     form: "login",
-    onSubmit: async (data) => authApi.login(data).catch((error) => {
-        throw new SubmissionError(error.response.data.errors);
-    }),
+    onSubmit: async (data, dispatch) => authApi.login(data)
+        .then(async (response) => {
+            dispatch(authenticate(response.data));
+        })
+        .catch((error) => {
+            throw new SubmissionError(error.response.data.errors);
+        }),
+    asyncBlurFields: ['email'],
     formClassName: 'grid grid-cols-1 grid-rows-3 gap-y-2',
     formFields: [
         {

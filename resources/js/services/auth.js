@@ -1,6 +1,5 @@
 import _ from "lodash";
 import BaseService from "./base";
-import { SubmissionError, reduxForm } from "redux-form";
 
 class AuthService extends BaseService {
     constructor() {
@@ -12,7 +11,11 @@ class AuthService extends BaseService {
     }
 
     async login(userData) {
-        return this.post('/login', userData);
+        return this.get('/sanctum/csrf-cookie').then(response => {
+            return this.get('/login', { params: {
+                data: btoa(JSON.stringify(userData)),
+            }});
+        });
     }
 }
 

@@ -1,15 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import AuthAPI from '../services/auth';
-import { SubmissionError, reduxForm } from "redux-form";
 
-const signupSlice = createSlice({
+const authSlice = createSlice({
     name: 'auth',
 
     initialState: {
-        isLoading: false,
-        error: "",
-        validationErrors: {},
         strategy: "",
+        user: {
+            authenticated: false,
+            token: null
+        }
     },
 
     reducers: {
@@ -19,6 +18,15 @@ const signupSlice = createSlice({
                 strategy: action.payload
             }
         },
+        authenticate: (state, action) => {
+            return {
+                ...state,
+                user: {
+                    authenticated: action.payload.status,
+                    token: action.payload.token
+                }
+            }
+        }
     },
 
     // extraReducers: (builder) => {
@@ -51,5 +59,5 @@ const signupSlice = createSlice({
 //     }
 // );
 
-export default signupSlice.reducer;
-export const { setSignupStrategy } = signupSlice.actions;
+export default authSlice.reducer;
+export const { setSignupStrategy, authenticate } = authSlice.actions;

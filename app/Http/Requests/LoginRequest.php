@@ -5,6 +5,8 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use App\Models\User;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
@@ -23,7 +25,7 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        return $this->isPrecognitive() ? [
             'email' => [
                 'required',
                 'string',
@@ -31,6 +33,6 @@ class LoginRequest extends FormRequest
                 Rule::exists(User::class)
             ],
             'password' => ['required'],
-        ];
+        ] : [];
     }
 }

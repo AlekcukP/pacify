@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, Navigate } from "react-router-dom";
 import { ROUTES } from "../../../app/routes";
 import Logo from "../../common/logo";
 import Header from "../common/header";
@@ -11,6 +12,12 @@ import { Facebook } from "../common/icons";
 import { Google } from "../common/icons";
 
 const LookupPage = () => {
+    const authenticated = useSelector(state => state.auth.user.authenticated);
+
+    if (authenticated) {
+        return <Navigate to={ROUTES.BASE}/>
+    }
+
     return <Fragment>
         <Logo />
 

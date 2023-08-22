@@ -1,5 +1,5 @@
-import React, { Fragment, useCallback } from "react";
-import { Link } from "react-router-dom";
+import React, { Fragment } from "react";
+import { Link, Navigate } from "react-router-dom";
 import { ROUTES } from "../../../app/routes";
 import Buttons from "./buttons";
 import Logo from "../../common/logo";
@@ -11,8 +11,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setSignupStrategy } from "../../../store/auth";
 
 const Signup = () => {
-    const signupStrategy = useSelector(state => state.signup.strategy);
+    const signupStrategy = useSelector(state => state.auth.strategy);
+    const authenticated = useSelector(state => state.auth.user.authenticated);
     const dispatch = useDispatch();
+
+    if (authenticated) {
+        return <Navigate to={ROUTES.BASE}/>
+    }
 
     return <Fragment>
         <Logo />
