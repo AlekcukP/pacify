@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const signupSlice = createSlice({
+export const componentsSlice = createSlice({
     name: 'components',
+
     initialState: {
         passwordVisible: false,
     },
+
     reducers: {
         togglePasswordVisibility: (state) => {
             return {
@@ -15,5 +17,4 @@ const signupSlice = createSlice({
     }
 });
 
-export default signupSlice.reducer;
-export const { togglePasswordVisibility } = signupSlice.actions;
+export const { togglePasswordVisibility } = componentsSlice.actions;

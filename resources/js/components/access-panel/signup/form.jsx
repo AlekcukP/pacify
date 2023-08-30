@@ -1,14 +1,21 @@
-import React from "react";
 import _ from 'lodash';
-import authApi from "../../../services/auth";
 import { SubmissionError } from "redux-form";
 import Form , { createForm } from "../../common/forms/form";
+import { useRegisterMutation } from '../../../api/auth';
+
+const useFormActions = () => {
+    const [register] = useRegisterMutation();
+
+    return {
+        onSubmit: (data) => register(data),
+        // onSuccess: () => console.log('here'),
+        // onError: () => {}
+    };
+};
 
 export default createForm({
     form: "register",
-    onSubmit: async (data) => authApi.register(data).catch((error) => {
-        throw new SubmissionError(error.response.data.errors);
-    }),
+    useFormActions: useFormActions,
     asyncBlurFields: ['first_name', 'last_name', 'email'],
     formFields: [
         {
@@ -39,5 +46,5 @@ export default createForm({
         className: 'btn-primary col-span-2 h-11',
         label: 'Create an Account',
     },
-    formClassName: 'grid grid-cols-2 grid-rows-5 gap-y-2 gap-x-1'
+    className: 'grid grid-cols-2 grid-rows-5 gap-y-2 gap-x-1'
 })(Form);

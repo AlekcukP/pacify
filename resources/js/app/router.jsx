@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ROUTES } from './routes';
 
-import AccessPanel from '../layouts/access-panel';
-import Dashboard from '../layouts/dashboard';
+import AccessPanel from '../shared/components/AccessPanel';
+import Dashboard from '../shared/components/Dashboard';
 
 import LookupPage from '../components/access-panel/lookup/page';
 import SignupPage from '../components/access-panel/signup/page';
@@ -15,7 +15,22 @@ import MarketingPage from '../components/dashboard/marketing';
 import CustomersPage from '../components/dashboard/customers';
 import SegmentsPage from '../components/dashboard/segments';
 
+import { useDispatch, useSelector } from 'react-redux';
+// import { useGetUserQuery } from '../api/auth';
+// import { setUserInfo } from '../redux/auth';
+
 const Router = () => {
+    // const { userInfo } = useSelector((state) => state.auth);
+    // const dispatch = useDispatch();
+
+    // const { data } = useGetUserQuery('user', {
+    //     pollingInterval: 900000, // 15mins
+    // });
+
+    // useEffect(() => {
+    //     if (data) dispatch(setUserInfo(data))
+    // }, [data, dispatch]);
+
     return <BrowserRouter>
         <Routes>
             <Route element={<AccessPanel />}>

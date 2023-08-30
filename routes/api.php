@@ -20,9 +20,12 @@ use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 //     return $request->user();
 // });
 
-Route::post('/login', [AuthController::class, 'login'])->middleware([HandlePrecognitiveRequests::class]);
-Route::get('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register'])->middleware([HandlePrecognitiveRequests::class]);
+Route::post('/form/login', [AuthController::class, 'login'])->middleware([HandlePrecognitiveRequests::class]);
+Route::post('/form/register', [AuthController::class, 'register'])->middleware([HandlePrecognitiveRequests::class]);
+
+Route::post('/auth/register', [AuthController::class, 'register']);
+Route::post('/auth/login', [AuthController::class, 'login']);
+Route::get('/auth/user', [AuthController::class, 'user']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/', function () {

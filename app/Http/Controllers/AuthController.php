@@ -31,18 +31,16 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $credentialsBase64 = Arr::get($request->query(), 'data', '');
-        $credentialsJson = base64_decode($credentialsBase64);
-        $credentials = json_decode($credentialsJson, true);
+        $credentials = $request->safe()->all();
 
-        if ($credentials && Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
             $tokenName = $request->user()->getTokenName();
             $token = $request->user()->createToken($tokenName);
-            $request->session()->regenerate();
 
             return response()->json([
                 'status' => true,
                 'message' => 'User logged in successfully.',
+                'user' => $request->user(),
                 'token' => $token->plainTextToken
             ]);
         }
@@ -53,14 +51,27 @@ class AuthController extends Controller
         ], 400);
     }
 
+    public function user(Request $request)
+    {
+        if (Auth::check()) {
+            return response()->json([
+                'status' => true,
+                'message' => 'User logged in successfully.',
+                'user' => Auth::user()
+            ]);
+        }
+
+        return redirect('unauthenticated');
+    }
+
     public function logout(Request $request)
     {
-        auth('web')->logout();
-        $request->session()->invalidate();
+        auth()->user()->tokens()->delete();
         $request->session()->regenerateToken();
+
         return response()->json([
             'status' => true,
-            'message' => 'logged out'
+            'message' => 'Logged out.'
         ]);
     }
 }

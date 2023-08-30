@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,6 +13,13 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::any('/unauthenticated', function () {
+    return response()->json([
+        'status' => false,
+        'message' => 'Unauthenticated.',
+    ], 401);
+})->name('unauthenticated');
 
 Route::view('/{path?}', 'index')
     ->where('path', '.*')

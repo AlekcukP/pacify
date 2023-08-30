@@ -1,9 +1,10 @@
 import React from 'react';
 import _ from 'lodash';
-import { ReduxFormContext, Form, reduxForm, Fields, SubmissionError } from 'redux-form';
+import { ReduxFormContext, Form, reduxForm, Fields, SubmissionError, actionTypes } from 'redux-form';
 import Input from './input';
 import Button from './button';
-import validateApi from '../../../services/validate';
+// import validateApi from '../../../api/validate';
+import { useValidateMutation, validateApi } from '../../../api/validate';
 
 const renderFields = (fields) => {
     const { formFields } = React.useContext(ReduxFormContext);
@@ -50,24 +51,35 @@ const FormContainer = (props) => {
     </FormContext>;
 };
 
-const FormComponent = ({ handleSubmit, invalid, pristine }) => {
-    const { formClassName } = React.useContext(ReduxFormContext);
+const FormComponent = ({ handleSubmit, pristine }) => {
+    const { className, useFormActions, form } = React.useContext(ReduxFormContext);
 
-    return <FormContainer className={formClassName} onSubmit={handleSubmit}>
+    const { onSubmit } = useFormActions();
+    // const [validate] = useValidateMutation();
+
+    const asyncValidate = async (values) => await validate(form, values);
+
+    return <FormContainer className={className} onSubmit={handleSubmit(onSubmit)}>
+    {/* return <FormContainer className={className} onSubmit={handleSubmit(onSubmit)} asyncValidate={asyncValidate}> */}
         <FormFields />
         <FormButton disabled={pristine}/>
     </FormContainer>;
 };
 
+
 export const createForm = (config) => {
     const { form } = config;
-
+    // const [validate] = useValidateMutation();
+    const asyncValidate = (values, dispatch) => {
+        return dispatch(validateApi.endpoints.validate.initiate(form, values));
+    }
     return reduxForm({
         ...config,
         shouldAsyncValidate: ({trigger, pristine, initialized}) => {
             return (trigger === 'blur') || (trigger === 'submit' && (!pristine || !initialized));
         },
-        asyncValidate: async (values) => validateApi.send(form, values),
+        asyncValidate: asyncValidate,
+        // asyncValidate: async (values) => validateApi.send(form, values),
         asyncChangeFields: [],
     });
 };

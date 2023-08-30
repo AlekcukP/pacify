@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import { useSelector } from "react-redux";
+import React, { Fragment, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { ROUTES } from "../../../app/routes";
 import Logo from "../../common/logo";
@@ -10,11 +10,12 @@ import Button from '../../common/forms/button';
 import Divider from '../../common/divider';
 import { Facebook } from "../common/icons";
 import { Google } from "../common/icons";
+import { useAuth } from "../../../hooks/useAuth";
 
 const LookupPage = () => {
-    const authenticated = useSelector(state => state.auth.user.authenticated);
+    const { user } = useAuth();
 
-    if (authenticated) {
+    if (user) {
         return <Navigate to={ROUTES.BASE}/>
     }
 

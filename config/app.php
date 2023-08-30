@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Pacify'),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://pacify.dev'),
+    'url' => env('APP_URL', 'http://pacify.test'),
 
     'asset_url' => env('ASSET_URL'),
 

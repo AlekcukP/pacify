@@ -22,6 +22,7 @@ export default defineConfig(({ mode }) => {
         },
         define: {
             __APP_NAME__: JSON.stringify(env.VITE_APP_NAME),
+            __APP_URL__: JSON.stringify(env.APP_URL),
         }
     }
 });
