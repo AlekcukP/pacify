@@ -5,9 +5,8 @@ import { baseQuery } from "./base-query";
 export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: baseQuery({
-        baseUrl: '/api/auth',
-        withCredentials: true,
-        withToken: false
+        baseUrl: 'auth',
+        withCredentials: true
     }),
     endpoints: (builder) => ({
         login: builder.mutation({
@@ -27,4 +26,5 @@ export const authApi = createApi({
     }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const login = authApi.endpoints.login.initiate;
+export const register = authApi.endpoints.register.initiate;

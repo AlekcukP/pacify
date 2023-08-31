@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
-import LoadingBar from 'react-top-loading-bar';
+import React from 'react';
+import {classnames} from 'tailwindcss-classnames';
+import { useCommon } from '../../../hooks/useCommon';
 
 
 const BarLoader = () => {
-    const [progress, setProgress] = useState(0);
+    const { isLoading } = useCommon();
 
-
-    return <LoadingBar
-        progress={progress}
-        shadow={true}
-        height={5}
-        onLoaderFinished={() => setProgress(0)}
-    />;
+    return <div className={classnames('h-1', 'fixed w-full', 'bg-transparent', { ['hidden']: !isLoading}) }>
+        <div className={classnames('animate-progress', 'h-1', 'bg-sky-700')}></div>
+    </div>
 }
 
 export default BarLoader;

@@ -27,6 +27,8 @@
         "ajv-formats": "^2.1.1",
         "ajv-keywords": "^5.1.0",
         "classnames": "^2.3.2",
+        "flowbite": "^1.8.1",
+        "flowbite-react": "^0.5.0",
         "immutable": "^4.3.2",
         "js-cookie": "^3.0.5",
         "lodash": "^4.17.21",
@@ -38,9 +40,10 @@
         "react-pro-sidebar": "^1.1.0-alpha.1",
         "react-redux": "^8.1.1",
         "react-router-dom": "^6.15.0",
-        "react-top-loading-bar": "^2.3.1",
         "redux": "^4.2.1",
         "redux-form": "^8.3.10",
-        "redux-persist": "^6.0.0"
+        "redux-persist": "^6.0.0",
+        "tailwindcss-classnames": "^3.1.0",
+        "uuid": "^9.0.0"
     }
 }

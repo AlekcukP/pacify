@@ -1,39 +1,43 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import _ from 'lodash';
-import { ReduxFormContext, Form, reduxForm, Fields, SubmissionError, actionTypes } from 'redux-form';
-import Input from './input';
-import Button from './button';
-// import validateApi from '../../../api/validate';
-import { useValidateMutation, validateApi } from '../../../api/validate';
+import { ReduxFormContext, Form, reduxForm, Fields } from 'redux-form';
+import Input from './Input';
+import Button from './Button';
+import { validate } from '../../../api/validate';
 
 const renderFields = (fields) => {
-    const { formFields } = React.useContext(ReduxFormContext);
+    const { formFields } = useContext(ReduxFormContext);
 
     return _.map(formFields, (field) => {
+        const { value, onChange, onBlur, name } = fields[field.name].input;
+
         return <Input
             { ...field }
-            input={fields[field.name].input}
             meta={fields[field.name].meta}
+            value={value}
+            onChange={onChange}
+            onBlur={onBlur}
+            name={name}
         />
     });
 }
 
 const FormFields = () => {
-    const { formFields } = React.useContext(ReduxFormContext);
+    const { formFields } = useContext(ReduxFormContext);
     const names = _.map(formFields, 'name');
 
     return <Fields names={names} component={renderFields}/>
 };
 
 const FormButton = ({ disabled }) => {
-    const { formButton } = React.useContext(ReduxFormContext);
+    const { formButton } = useContext(ReduxFormContext);
     const { label, className } = formButton;
 
     return <Button type={Button.validTypes.submit} className={className} disabled={disabled}>{label}</Button>
 };
 
 const FormContext = props => {
-    const reduxForm = React.useContext(ReduxFormContext);
+    const reduxForm = useContext(ReduxFormContext);
 
     return <ReduxFormContext.Provider
         {...props}
@@ -52,37 +56,28 @@ const FormContainer = (props) => {
 };
 
 const FormComponent = ({ handleSubmit, pristine }) => {
-    const { className, useFormActions, form } = React.useContext(ReduxFormContext);
+    const { className } = useContext(ReduxFormContext);
 
-    const { onSubmit } = useFormActions();
-    // const [validate] = useValidateMutation();
-
-    const asyncValidate = async (values) => await validate(form, values);
-
-    return <FormContainer className={className} onSubmit={handleSubmit(onSubmit)}>
-    {/* return <FormContainer className={className} onSubmit={handleSubmit(onSubmit)} asyncValidate={asyncValidate}> */}
+    return <FormContainer className={className} onSubmit={handleSubmit}>
         <FormFields />
         <FormButton disabled={pristine}/>
     </FormContainer>;
 };
 
-
 export const createForm = (config) => {
-    const { form } = config;
-    // const [validate] = useValidateMutation();
-    const asyncValidate = (values, dispatch) => {
-        return dispatch(validateApi.endpoints.validate.initiate(form, values));
+    const asyncValidate = async (values, dispatch) => {
+        const { errors } = await dispatch(validate({form: config.form, values: values})).unwrap();
+        if (errors) throw errors;
     }
+
     return reduxForm({
-        ...config,
-        shouldAsyncValidate: ({trigger, pristine, initialized}) => {
-            return (trigger === 'blur') || (trigger === 'submit' && (!pristine || !initialized));
-        },
+        shouldAsyncValidate: ({trigger, pristine, initialized}) => (
+            (trigger === 'blur') || (trigger === 'submit' && (!pristine || !initialized))
+        ),
         asyncValidate: asyncValidate,
-        // asyncValidate: async (values) => validateApi.send(form, values),
         asyncChangeFields: [],
+        ...config,
     });
 };
 
 export default FormComponent;
-

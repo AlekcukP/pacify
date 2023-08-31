@@ -1,23 +1,17 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 export const authSlice = createSlice({
     name: 'auth',
 
     initialState: {
-        loading: false,
         user: null,
         token: localStorage.getItem('token') || null,
         error: null,
         success: false,
         csrf: null,
-        strategy: ""
     },
 
     reducers: {
-        setSignupStrategy: (state, { payload }) => {
-            state.strategy = payload;
-        },
-
         resetCredentials: (state) => {
             localStorage.removeItem('token');
 
@@ -38,4 +32,4 @@ export const authSlice = createSlice({
     },
 });
 
-export const { setSignupStrategy, setCredentials, setCsrf } = authSlice.actions;
+export const { setCredentials, setCsrf } = authSlice.actions;

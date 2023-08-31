@@ -22,10 +22,14 @@ class AuthController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
+        $tokenName = $user->getTokenName();
+        $token = $user->createToken($tokenName);
+
         response()->json([
             'status' => true,
             'message' => 'User created successfully.',
-            'user' => $user
+            'user' => $user,
+            'token' => $token->plainTextToken
         ]);
     }
 

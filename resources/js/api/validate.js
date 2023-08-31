@@ -4,16 +4,15 @@ import { baseQuery } from "./base-query";
 export const validateApi = createApi({
     reducerPath: 'validateApi',
     baseQuery: baseQuery({
-        baseUrl: '/api/form',
+        baseUrl: 'form',
         withCredentials: true,
-        withToken: false,
         headers: {
             'Precognition': true
         }
     }),
     endpoints: (builder) => ({
         validate: builder.mutation({
-            query: (form, values) => ({
+            query: ({ form, values }) => ({
                 url: form,
                 method: 'POST',
                 body: values
@@ -21,3 +20,5 @@ export const validateApi = createApi({
         }),
     }),
 });
+
+export const validate = validateApi.endpoints.validate.initiate;
