@@ -3,8 +3,8 @@ import { Label as TextInputLabel, TextInput } from 'flowbite-react';
 import { Exclamation } from './Icons';
 import { v4 as uuidv4 } from 'uuid';
 import { Eye, InvisisbleEye } from './Icons';
-import { useCommon } from '../../../hooks/useCommon';
-import { setPasswordDisplay } from '../../../redux/common';
+import { useCommon } from '../../hooks/useCommon';
+import { setPasswordDisplay } from '../../redux/common';
 import { useDispatch } from 'react-redux';
 import { classnames } from 'tailwindcss-classnames';
 

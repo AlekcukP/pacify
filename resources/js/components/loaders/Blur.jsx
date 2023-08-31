@@ -1,7 +1,7 @@
 import React from 'react';
 import { classnames } from 'tailwindcss-classnames';
 import { Spinner } from 'flowbite-react';
-import { useCommon } from '../../../hooks/useCommon';
+import { useCommon } from '../../hooks/useCommon';
 
 
 const BlurSpinner = () => {

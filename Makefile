@@ -10,6 +10,10 @@ up:
 down:
 	./vendor/bin/sail down
 
+.PHONY: restart
+restart:
+	./vendor/bin/sail restart
+
 .PHONY: bash
 bash:
 	./vendor/bin/sail bash

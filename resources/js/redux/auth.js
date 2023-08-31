@@ -5,32 +5,23 @@ export const authSlice = createSlice({
 
     initialState: {
         user: null,
-        token: localStorage.getItem('token') || null,
-        csrf: null,
+        token: null,
         authenticated: false
     },
 
     reducers: {
         resetCredentials: (state) => {
-            localStorage.removeItem('token');
-
             state.user = null;
             state.token = null;
             state.authenticated = false;
         },
 
         setCredentials: (state, { payload: { user, token } }) => {
-            localStorage.setItem('token', token);
-
             state.user = user;
             state.token = token;
             state.authenticated = true;
         },
-
-        setCsrf: (state, { payload }) => {
-            state.csrf = payload;
-        }
     },
 });
 
-export const { setCredentials, setCsrf } = authSlice.actions;
+export const { setCredentials, resetCredentials } = authSlice.actions;

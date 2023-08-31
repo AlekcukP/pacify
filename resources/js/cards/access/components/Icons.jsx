@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from '../../../components/common/icon';
+import Icon from '../../../components/icon';
 
 import { FcGoogle } from "react-icons/fc";
 import { BiLogoFacebookCircle } from "react-icons/bi";

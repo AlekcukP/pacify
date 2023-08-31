@@ -1,8 +1,8 @@
 import React from "react";
 import { classnames } from "tailwindcss-classnames";
 import { Card } from 'flowbite-react';
-import Image from "../../components/common/Image";
-import BlurSpinner from "../../components/common/loaders/Blur";
+import Image from "../../components/Image";
+import BlurSpinner from "../../components/loaders/Blur";
 import logo from '../../../assets/images/logo.png';
 
 const Header = ({ title, subtext }) => {

@@ -1,5 +1,5 @@
 import React from "react";
-import Icon from "../../components/common/icon";
+import Icon from "../../components/icon";
 import { AiFillHome } from "react-icons/ai";
 import { AiOutlineAreaChart } from "react-icons/ai";
 import { BiSolidUser } from "react-icons/bi";

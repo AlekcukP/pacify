@@ -3,8 +3,8 @@ import LogoCard from "./Logo";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../app/routes";
 import LookupForm from "./components/LookupForm";
-import Button from "../../components/common/forms/Button";
-import Divider from "../../components/common/Divider";
+import Button from "../../components/forms/Button";
+import Divider from "../../components/Divider";
 import { Facebook } from "./components/Icons";
 import { Google } from "./components/Icons";
 

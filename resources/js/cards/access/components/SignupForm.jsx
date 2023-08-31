@@ -1,5 +1,5 @@
 import { SubmissionError } from "redux-form";
-import Form , { createForm } from "../../../components/common/forms/form";
+import Form , { createForm } from "../../../components/forms/form";
 import { register } from "../../../api/auth";
 import { setCredentials } from '../../../redux/auth';
 

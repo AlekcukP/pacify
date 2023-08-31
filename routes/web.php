@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Http\Client\Request;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::post('/login', [AuthController::class, 'login'])->middleware([HandlePrecognitiveRequests::class]);
+Route::post('/register', [AuthController::class, 'register'])->middleware([HandlePrecognitiveRequests::class]);
 
 Route::any('/unauthenticated', function () {
     return response()->json([

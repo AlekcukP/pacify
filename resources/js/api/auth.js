@@ -1,29 +1,25 @@
 import _ from "lodash";
-import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQuery } from "./base-query";
+import { api } from "./api";
 
-export const authApi = createApi({
-    reducerPath: 'authApi',
-    baseQuery: baseQuery({
-        baseUrl: 'auth',
-        withCredentials: true
-    }),
+const authApi = api.injectEndpoints({
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (credentials) => ({
                 url: 'login',
                 method: 'POST',
-                body: credentials
+                body: credentials,
+                withCredentials: true
             }),
         }),
         register: builder.mutation({
             query: (userData) => ({
                 url: 'register',
                 method: 'POST',
-                body: userData
-            }),
+                body: userData,
+                withCredentials: true
+            })
         })
-    }),
+    })
 });
 
 export const login = authApi.endpoints.login.initiate;

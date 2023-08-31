@@ -1,6 +1,6 @@
 import React from 'react';
 import {classnames} from 'tailwindcss-classnames';
-import { useCommon } from '../../../hooks/useCommon';
+import { useCommon } from '../../hooks/useCommon';
 
 
 const BarLoader = () => {

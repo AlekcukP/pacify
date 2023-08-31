@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "../../components/common/Image";
+import Image from "../../components/Image";
 import ThemeToggle from "./ThemeToggle";
 import logo from '../../../assets/images/logo.png'
 

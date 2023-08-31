@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { SubmissionError } from "redux-form";
-import Form, { createForm } from '../../../components/common/forms/form';
+import Form, { createForm } from '../../../components/forms/form';
 import { login } from "../../../api/auth";
 import { setCredentials } from '../../../redux/auth';
 

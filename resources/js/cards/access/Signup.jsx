@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import LogoCard from "./Logo";
 import SignupForm from "./components/SignupForm";
-import Button from "../../components/common/forms/Button";
+import Button from "../../components/forms/Button";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../app/routes";
 import { Mail } from "./components/Icons";
