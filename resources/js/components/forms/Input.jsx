@@ -1,7 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useId } from 'react';
 import { Label as TextInputLabel, TextInput } from 'flowbite-react';
 import { Exclamation } from './Icons';
-import { v4 as uuidv4 } from 'uuid';
 import { Eye, InvisisbleEye } from './Icons';
 import { useCommon } from '../../hooks/useCommon';
 import { setPasswordDisplay } from '../../redux/common';
@@ -68,7 +67,6 @@ const getType = (type, displayed) => {
 const Input = ({
     type = Input.types.text,
     label = null,
-    id = uuidv4(),
     size = Input.sizes.md,
     meta = {},
     className,
@@ -82,6 +80,7 @@ const Input = ({
 }) => {
     const { isPasswordDisplayed } = useCommon();
     const { error, valid, dirty } = meta;
+    const id = useId();
 
     return <div className={className}>
         {label && <Label sign={label} htmlFor={id}/>}

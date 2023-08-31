@@ -17,10 +17,6 @@
     }
 }
 
-a {
-    @apply hover:underline;
-}
-
 .link {
-    @apply text-sky-500;
+    @apply text-sky-500 hover:underline;
 }

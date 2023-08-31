@@ -7,7 +7,7 @@ const BarLoader = () => {
     const { isLoading } = useCommon();
 
     return <div className={classnames('h-1', 'fixed w-full', 'bg-transparent', { ['hidden']: !isLoading}) }>
-        <div className={classnames('animate-progress', 'h-1', 'bg-sky-700')}></div>
+        <div className={classnames('animate-progress', 'h-1', 'bg-cyan-600')}></div>
     </div>
 }
 
