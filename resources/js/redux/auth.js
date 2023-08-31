@@ -6,9 +6,8 @@ export const authSlice = createSlice({
     initialState: {
         user: null,
         token: localStorage.getItem('token') || null,
-        error: null,
-        success: false,
         csrf: null,
+        authenticated: false
     },
 
     reducers: {
@@ -17,6 +16,7 @@ export const authSlice = createSlice({
 
             state.user = null;
             state.token = null;
+            state.authenticated = false;
         },
 
         setCredentials: (state, { payload: { user, token } }) => {
@@ -24,6 +24,7 @@ export const authSlice = createSlice({
 
             state.user = user;
             state.token = token;
+            state.authenticated = true;
         },
 
         setCsrf: (state, { payload }) => {

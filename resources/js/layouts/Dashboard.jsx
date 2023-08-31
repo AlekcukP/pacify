@@ -5,10 +5,10 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth';
 
 const DashboardLayout = () => {
-    const { user } = useAuth();
+    const { authenticated } = useAuth();
     const location = useLocation();
 
-    if (!user) {
+    if (!authenticated) {
         return <Navigate to={ROUTES.LOOKUP} state={{ from: location }} />;
     }
 

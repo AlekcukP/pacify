@@ -3,7 +3,7 @@ import { classnames } from "tailwindcss-classnames";
 import { Card } from 'flowbite-react';
 import Image from "../../components/common/Image";
 import BlurSpinner from "../../components/common/loaders/Blur";
-import logo from '../../../assets/images/plogo.png';
+import logo from '../../../assets/images/logo.png';
 
 const Header = ({ title, subtext }) => {
     return <article>

@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 
 export const useAuth = () => {
-    const { user, csrf, token, strategy } = useSelector(state => state.auth);
+    const { user, csrf, token, authenticated } = useSelector(state => state.auth);
 
-    return useMemo(() => ({ user, csrf, token, strategy }), [user, csrf, token, strategy]);
+    return useMemo(() => ({ user, csrf, token, authenticated }), [user, csrf, token, authenticated]);
 }

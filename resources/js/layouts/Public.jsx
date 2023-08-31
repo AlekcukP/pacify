@@ -4,10 +4,10 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth';
 
 const PublicLayout = () => {
-    const { user } = useAuth();
+    const { authenticated } = useAuth();
     const location = useLocation();
 
-    if (!user) {
+    if (authenticated) {
         return <Navigate to={ROUTES.BASE} state={{ from: location }} />;
     }
 

@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "../../components/common/Image";
 import ThemeToggle from "./ThemeToggle";
-import logo from '../../../assets/images/plogo.png'
+import logo from '../../../assets/images/logo.png'
 
 const Navbar = () => {
     return <nav className="navbar">
