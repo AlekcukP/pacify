@@ -2,7 +2,9 @@ import React from "react";
 import { classnames } from "tailwindcss-classnames";
 import { Card, Footer as ReactFooter } from 'flowbite-react';
 import BlurSpinner from "../../components/loaders/BlurSpinner";
-import Logo from "../../utils/Logo";
+import Logo from "../../components/Logo";
+
+const { Copyright, LinkGroup, Link } = ReactFooter;
 
 const Header = ({ title, subtext }) => {
     return <article>
@@ -12,10 +14,10 @@ const Header = ({ title, subtext }) => {
 };
 
 const Footer = () => {
-    const { Copyright, LinkGroup, Link } = ReactFooter;
+    const year = new Date().getFullYear();
 
     return <ReactFooter className="shadow-none flex justify-between">
-        <Copyright by="Pacify" year={2023} />
+        <Copyright by="Pacify" year={year} />
         <LinkGroup>
             <Link className="mr-6" href="">Help</Link>
             <Link className="mr-6" href="">Privacy</Link>

@@ -19,7 +19,7 @@ export const authSlice = createSlice({
         setCredentials: (state, { payload: { user, token } }) => {
             state.user = user;
             state.token = token;
-            state.authenticated = true;
+            state.authenticated = Boolean(token);
         },
     },
 });

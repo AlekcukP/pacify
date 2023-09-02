@@ -1,19 +1,16 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { Dropdown, Navbar as ReactNavbar, Avatar } from 'flowbite-react';
 import BurgerMenu from "./BurgerMenu";
-import Image from "../../components/Image";
-import Logo from "../../utils/Logo";
-import logo from '../../../assets/images/logo.png';
+import Logo from "../../components/Logo";
 import defaultProfile from '../../../assets/images/default_profile.svg';
-import { useDispatch } from "react-redux";
-import { resetCredentials } from "../../redux/auth";
 import { DarkThemeToggle } from 'flowbite-react';
+import { useSignOut } from "../../actions/auth";
+
+const { Brand } = ReactNavbar;
+const { Header, Divider, Item } = Dropdown;
 
 const Navbar = () => {
-    const { Brand } = ReactNavbar;
-    const { Header, Divider, Item } = Dropdown;
-    const dispatch = useDispatch();
-    const signOut = useCallback(() => dispatch(resetCredentials(), []));
+    const signOut = useSignOut();
 
     return (
         <ReactNavbar fluid rounded className="border-b-2 py-2">

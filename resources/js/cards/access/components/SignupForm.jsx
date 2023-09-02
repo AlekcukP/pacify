@@ -1,20 +1,9 @@
-import { SubmissionError } from "redux-form";
 import Form , { createForm } from "../../../components/forms/form";
-import { register } from "../../../api/auth";
-import { setCredentials } from '../../../redux/auth';
+import { useSignUp } from "../../../actions/auth";
 
 export default createForm({
     form: "register",
-    onSubmit: async (userData, dispatch) => {
-        const result = await dispatch(register(userData)).unwrap();
-
-        if (result?.errors) throw new SubmissionError(result.errors);
-
-        dispatch(setCredentials({
-            token: result.token,
-            user: result.user
-        }));
-    },
+    useOnSubmit: useSignUp,
     asyncBlurFields: ['first_name', 'last_name', 'email'],
     formFields: [
         {

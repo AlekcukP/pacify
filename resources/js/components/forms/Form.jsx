@@ -56,9 +56,10 @@ const FormContainer = (props) => {
 };
 
 const FormComponent = ({ handleSubmit, pristine }) => {
-    const { className } = useContext(ReduxFormContext);
+    const { className, useOnSubmit } = useContext(ReduxFormContext);
+    const onSubmit = useOnSubmit();
 
-    return <FormContainer className={className} onSubmit={handleSubmit}>
+    return <FormContainer className={className} onSubmit={handleSubmit(onSubmit)}>
         <FormFields />
         <FormButton disabled={pristine}/>
     </FormContainer>;

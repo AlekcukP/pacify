@@ -8,7 +8,7 @@ const Dashboard = ({ children }) => {
         <Navbar />
         <div className="flex h-full">
             <Sidebar />
-            <div className="full-size p-2.5 bg-gray-100">
+            <div className="full-size p-2.5 bg-gray-100 dark:bg-gray-800">
                 { children }
             </div>
         </div>

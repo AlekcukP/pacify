@@ -1,21 +1,9 @@
-import _ from 'lodash';
-import { SubmissionError } from "redux-form";
 import Form, { createForm } from '../../../components/forms/form';
-import { login } from "../../../api/auth";
-import { setCredentials } from '../../../redux/auth';
+import { useLookUp } from "../../../actions/auth";
 
 export default createForm({
     form: "login",
-    onSubmit: async (credentials, dispatch) => {
-        const result = await dispatch(login(credentials)).unwrap();
-
-        if (result?.errors) throw new SubmissionError(result.errors);
-
-        dispatch(setCredentials({
-            token: result.token,
-            user: result.user
-        }));
-    },
+    useOnSubmit: useLookUp,
     asyncBlurFields: ['email'],
     formFields: [
         {

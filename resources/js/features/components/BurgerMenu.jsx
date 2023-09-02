@@ -1,12 +1,10 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { classnames } from "tailwindcss-classnames";
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
-import { useDispatch } from "react-redux";
-import { setSidebarOpen } from "../../redux/common";
+import { useOpenSidebar } from "../../actions/common";
 
 const BurgerMenu = () => {
-    const dispatch = useDispatch();
-    const openSidebar = useCallback(() => dispatch(setSidebarOpen(true)), []);
+    const openSidebar = useOpenSidebar();
 
     const theme = classnames(
         'inline-flex',

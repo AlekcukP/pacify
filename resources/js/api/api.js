@@ -45,7 +45,7 @@ export const baseQuery = ({ baseUrl } = { baseUrl: '/' }) => async (args, { getS
 
     try {
         const result = await axios(config);
-
+        console.log(result, 'result bsq')
         return {
             status: true,
             code: HttpStatusCode.Ok,

@@ -1,21 +1,18 @@
-import React, { createContext, useCallback, useContext } from "react";
+import React, { Fragment } from "react";
 import _ from "lodash";
+import classnames from 'tailwindcss-classnames';
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useCommon } from "../../hooks/useCommon";
-import { setSidebarOpen } from "../../redux/common";
 import { ROUTES } from "../../app/routes";
 import { Sidebar as ReactSidebar } from 'flowbite-react';
-import {classnames} from 'tailwindcss-classnames';
-import logo from '../../../assets/images/logo.png';
-
+import { useLogo } from "../../hooks/useCommon";
+import { useCloseSidebar } from "../../actions/common";
 import { AiFillHome } from "react-icons/ai";
 import { HiCollection } from "react-icons/hi";
 import { MdInventory } from "react-icons/md";
 import { MdDiscount } from "react-icons/md";
 
 const { Items, ItemGroup, Logo } = ReactSidebar;
-const SidebarContext = createContext(null);
 
 const theme = {
     root: {
@@ -74,11 +71,20 @@ const theme = {
         'text-gray-500',
         'group-[.active]/tab:text-gray-900',
         'dark:group-[.active]/tab:text-gray-200'
+    ),
+    background: classnames(
+        'absolute',
+        'top-0',
+        'z-20',
+        'w-full',
+        'h-full',
+        'bg-gray-700/25'
     )
 };
 
 const SidebarMenu = ({ children }) => {
     const { isSidebarOpen } = useCommon();
+    const logo = useLogo();
 
     return <ReactSidebar theme={theme} className={classnames({ 'translate-x-0': isSidebarOpen })}>
         <Logo img={logo} imgAlt="Logo" theme={theme.logo}></Logo>
@@ -91,7 +97,7 @@ const SidebarMenu = ({ children }) => {
 };
 
 const SidebarTab = ({path, label, icon: Icon }) => {
-    const { closeSidebar } = useContext(SidebarContext);
+    const { closeSidebar } = useCloseSidebar();
 
     return <li onClick={closeSidebar}>
         <NavLink to={path} className={theme.link}>
@@ -101,32 +107,26 @@ const SidebarTab = ({path, label, icon: Icon }) => {
     </li>
 };
 
-const Sidebar = () => {
-    const dispatch = useDispatch();
+const SidebarBackground = () => {
     const { isSidebarOpen } = useCommon();
+    const { closeSidebar } = useCloseSidebar();
 
-    const closeSidebar = useCallback(
-        () => isSidebarOpen && dispatch(setSidebarOpen(false)),
-        [isSidebarOpen]
-    );
+    return <div onClick={closeSidebar} className={classnames(
+        theme.background,
+        { 'hidden': !isSidebarOpen }
+    )}></div>
+};
 
-    return <SidebarContext.Provider value={{closeSidebar}}>
+const Sidebar = () => {
+    return <Fragment>
         <SidebarMenu >
             <SidebarTab path={ROUTES.BASE} label={"Home"} icon={AiFillHome}/>
             <SidebarTab path={ROUTES.PRODUCTS} label={"Products"} icon={MdDiscount}/>
             <SidebarTab path={ROUTES.COLLECTION} label={"Collection"} icon={HiCollection}/>
             <SidebarTab path={ROUTES.INVENTORY} label={"Inventory"} icon={MdInventory}/>
         </SidebarMenu>
-        <div onClick={closeSidebar} className={classnames(
-            'absolute',
-            'top-0',
-            'z-20',
-            'w-full',
-            'h-full',
-            'bg-gray-700/25',
-            { 'hidden': !isSidebarOpen }
-        )}></div>
-    </SidebarContext.Provider>
+        <SidebarBackground/>
+    </Fragment>
 };
 
 export default Sidebar;

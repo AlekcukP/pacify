@@ -24,3 +24,5 @@ const authApi = api.injectEndpoints({
 
 export const login = authApi.endpoints.login.initiate;
 export const register = authApi.endpoints.register.initiate;
+
+export const { useRegisterMutation, useLoginMutation } = authApi;

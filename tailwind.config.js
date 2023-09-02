@@ -6,15 +6,6 @@ export default {
   ],
   theme: {
     extend: {
-      animation: {
-        progress: 'progress 30s cubic-bezier(.15,.36,.24,.67) 0s 1'
-      },
-      keyframes: {
-        progress: {
-          '0%': { width: '5%' },
-          '100%': { width: '100%' },
-        },
-      },
       width: {
         '128': '32rem',
       },
