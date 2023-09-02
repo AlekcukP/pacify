@@ -3,15 +3,14 @@ import { Provider } from 'react-redux';
 import { store, persistor } from '../redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import Router from './router';
-import BarLoader from '../components/loaders/Bar';
+import Container from '../layouts/Container';
 
 const App = () => {
     return <PersistGate loading={null} persistor={persistor}>
         <Provider store={store}>
-            <div className='full-screen'>
-                <BarLoader />
+            <Container>
                 <Router />
-            </div>
+            </Container>
         </Provider>
     </PersistGate>
 }

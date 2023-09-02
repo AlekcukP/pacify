@@ -1,11 +1,20 @@
 import React, { useCallback, useId } from 'react';
 import { Label as TextInputLabel, TextInput } from 'flowbite-react';
-import { Exclamation } from './Icons';
-import { Eye, InvisisbleEye } from './Icons';
+import { BsFillExclamationCircleFill } from "react-icons/bs";
+import { AiFillEye } from "react-icons/ai";
+import { AiFillEyeInvisible } from "react-icons/ai";
 import { useCommon } from '../../hooks/useCommon';
 import { setPasswordDisplay } from '../../redux/common';
 import { useDispatch } from 'react-redux';
 import { classnames } from 'tailwindcss-classnames';
+
+const theme = {
+    field: {
+        rightIcon: {
+            base: classnames('absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer')
+        }
+    }
+};
 
 const Label = ({ sign, htmlFor }) => {
     return <div className="block">
@@ -16,8 +25,8 @@ const Label = ({ sign, htmlFor }) => {
     </div>
 };
 
-const Error = ({ error }) => <p className="flex items-center tracking-[-.075em] text-xs">
-    <Exclamation className="mr-1"/>
+const Error = ({ error }) => <p className="flex items-center tracking-[-.075em] text-xs -mt-1">
+    <BsFillExclamationCircleFill size={12} className="mr-1"/>
     <span>{error}</span>
 </p>;
 
@@ -33,9 +42,9 @@ const PasswordIcon = () => {
         dispatch(setPasswordDisplay(false));
     }, []);
 
-    if (isPasswordDisplayed) return <Eye onClick={hidePassword} />;
+    if (isPasswordDisplayed) return <AiFillEye className='text-gray-400' size={20} onClick={hidePassword} />;
 
-    return <InvisisbleEye onClick={showPassword}/>;
+    return <AiFillEyeInvisible className='text-gray-400' size={20} onClick={showPassword}/>;
 };
 
 const isPassword = (type) => type === Input.types.password;
@@ -97,7 +106,7 @@ const Input = ({
             id={id}
             icon={icon}
             rightIcon={isPassword(type) ? PasswordIcon : rightIcon}
-            theme={Input.theme}
+            theme={theme}
         />
     </div>
 };
@@ -120,14 +129,6 @@ Input.colors = {
     failure: 'failure',
     warning: 'warning',
     success: 'success'
-};
-
-Input.theme = {
-    field: {
-        rightIcon: {
-            base: classnames('absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer')
-        }
-    }
 };
 
 export default Input;

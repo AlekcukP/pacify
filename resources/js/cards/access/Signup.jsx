@@ -1,47 +1,48 @@
-import React, { useState } from "react";
-import LogoCard from "./Logo";
+import React, { useState, Fragment } from "react";
+import AccessCard from "./Access";
 import SignupForm from "./components/SignupForm";
 import Button from "../../components/forms/Button";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../app/routes";
-import { Mail } from "./components/Icons";
-import { Google } from "./components/Icons";
-import { Facebook } from "./components/Icons";
+import { BiLogoFacebookCircle } from "react-icons/bi";
+import { FcGoogle } from "react-icons/fc";
+import { IoMail } from "react-icons/io5";
 
 
 const SignupCard = () => {
     const [showSignupForm, setShowSignupForm] = useState(false);
 
-    return <LogoCard title={"Create an account"} subtext={"One last step before starting use an app"}>
-        {!showSignupForm && <div>
-            <Button className='btn-bordered' onClick={() => setShowSignupForm(true)}>
-                <Mail className='mr-3'/>
+    return <AccessCard title={"Create an account"} subtext={"One last step before starting use an app"}>
+        {!showSignupForm && <Fragment>
+            <Button color={Button.colors.gray} outline={true} onClick={() => setShowSignupForm(true)}>
+                <IoMail className='mr-2 h-5 w-5'/>
                 <span>Continue with Email</span>
             </Button>
-            <Button className='btn-bordered my-4' onClick={() => console.log('continue with google')}>
-                <Google className='mr-3'/>
+            <Button color={Button.colors.gray} outline={true} onClick={() => console.log('continue with google')}>
+                <FcGoogle className='mr-2 h-5 w-5'/>
                 <span>Continue with Google</span>
             </Button>
-            <Button className='btn-bordered my-4' onClick={() => console.log('continue with facebook')}>
-                <Facebook className='mr-3'/>
+            <Button color={Button.colors.gray} outline={true} onClick={() => console.log('continue with facebook')}>
+                <BiLogoFacebookCircle className='mr-2 h-5 w-5 text-blue-500'/>
                 <span>Continue with Facebook</span>
             </Button>
-        </div>}
+        </Fragment>}
 
         {showSignupForm && <SignupForm />}
 
-        <div className='text-sm font-light mb-2'>
-            By proceeding, you agree to the&nbsp;
-            <a href='#' className='link'>Terms and Conditions</a>&nbsp;and&nbsp;
+        <p className='text-sm font-light dark:text-gray-200'>
+            <span>By proceeding, you agree to the&nbsp;</span>
+            <a href='#' className='link'>Terms and Conditions</a>
+            <span>&nbsp;and&nbsp;</span>
             <a href='#' className='link'>Privacy Policy</a>
-        </div>
+        </p>
 
-        <div className='text-sm font-light'>
-            <span>Already have an account?</span>
-            &nbsp;<Link to={ROUTES.LOOKUP} className='link' onClick={() => setShowSignupForm(false)}>Log in</Link>
-        </div>
+        <p className='text-sm font-light dark:text-gray-200'>
+            <span>Already have an account?&nbsp;</span>
+            <Link to={ROUTES.LOOKUP} className='link'>Log in</Link>
+        </p>
 
-    </LogoCard>;
+    </AccessCard>;
 };
 
 export default SignupCard;

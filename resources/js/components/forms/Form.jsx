@@ -33,7 +33,7 @@ const FormButton = ({ disabled }) => {
     const { formButton } = useContext(ReduxFormContext);
     const { label, className } = formButton;
 
-    return <Button type={Button.validTypes.submit} className={className} disabled={disabled}>{label}</Button>
+    return <Button type={Button.types.submit} className={className} disabled={disabled}>{label}</Button>
 };
 
 const FormContext = props => {

@@ -1,37 +1,36 @@
 import React from "react";
-import LogoCard from "./Logo";
+import AccessCard from "./Access";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../app/routes";
 import LookupForm from "./components/LookupForm";
 import Button from "../../components/forms/Button";
 import Divider from "../../components/Divider";
-import { Facebook } from "./components/Icons";
-import { Google } from "./components/Icons";
+import { BiLogoFacebookCircle } from "react-icons/bi";
+import { FcGoogle } from "react-icons/fc";
 
 const LookupCard = () => {
 
-    return <LogoCard title={"Log in"} subtext={`Continue to ${__APP_NAME__}`}>
+    return <AccessCard title={"Log in"} subtext={`Continue to Pacify`}>
         <LookupForm />
 
         <Divider margin={20} text={"or"}/>
 
-        <div>
-            <Button className='btn-bordered' onClick={() => console.log('google sign up')}>
-                <Google className='mr-3'/>
-                <span>Continue with Google</span>
-            </Button>
-            <Button className='btn-bordered my-4' onClick={() => console.log('face sign up')}>
-                <Facebook className='mr-3'/>
-                <span>Continue with Facebook</span>
-            </Button>
-        </div>
+        <Button color={Button.colors.gray} outline={true} onClick={() => console.log('google sign up')}>
+            <FcGoogle className='mr-2 h-5 w-5'/>
+            <span>Continue with Google</span>
+        </Button>
 
-        <div className='text-sm font-light'>
-            <span>New to {__APP_NAME__}?</span>&nbsp;
+        <Button color={Button.colors.gray} outline={true} onClick={() => console.log('face sign up')}>
+            <BiLogoFacebookCircle className='mr-2 h-5 w-5 text-blue-500'/>
+            <span>Continue with Facebook</span>
+        </Button>
+
+        <p className='text-sm font-light dark:text-gray-200'>
+            <span>New to Pacify?</span>&nbsp;
             <Link to={ROUTES.SIGNUP} className='link'>Get started</Link>
-        </div>
+        </p>
 
-    </LogoCard>;
+    </AccessCard>;
 };
 
 export default LookupCard;

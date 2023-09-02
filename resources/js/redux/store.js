@@ -1,6 +1,6 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { reducer as formReducer } from 'redux-form';
-import storage from 'redux-persist/lib/storage';
+import storage from 'redux-persist-indexeddb-storage';
 import {
     persistReducer,
     persistStore,
@@ -30,9 +30,9 @@ const rootReducer = combineReducers({
 
 const persistedReducer = persistReducer({
     key: 'root',
-    storage,
-    blacklist: ['form']
-}, rootReducer)
+    storage: storage('stateDB'),
+    blacklist: ['form', commonSlice.name]
+}, rootReducer);
 
 export const store = configureStore({
     reducer: persistedReducer,

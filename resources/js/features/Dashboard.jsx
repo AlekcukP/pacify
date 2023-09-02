@@ -1,9 +1,10 @@
 import React from "react";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
+import classnames from "tailwindcss-classnames";
 
 const Dashboard = ({ children }) => {
-    return <div className="full-size bg-white">
+    return <div className={classnames('full-size', 'bg-white', 'relative', 'dark:bg-gray-800')}>
         <Navbar />
         <div className="flex h-full">
             <Sidebar />

@@ -2,6 +2,7 @@ import React from 'react';
 import { ROUTES } from '../app/routes';
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth';
+import { classnames } from 'tailwindcss-classnames';
 
 const PublicLayout = () => {
     const { authenticated } = useAuth();
@@ -11,7 +12,12 @@ const PublicLayout = () => {
         return <Navigate to={ROUTES.BASE} state={{ from: location }} />;
     }
 
-    return <section className='full-size bg-gradient flex-center'>
+    return <section className={classnames(
+        'full-size',
+        'flex',
+        'md:bg-gradient',
+        'dark:bg-gray-800'
+    )}>
         <Outlet />
     </section>;
 };

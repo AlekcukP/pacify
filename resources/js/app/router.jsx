@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ROUTES } from './routes';
 
 import PublicLayout from '../layouts/Public';
@@ -9,11 +9,9 @@ import LookupCard from '../cards/access/Lookup';
 import SignupCard from '../cards/access/Signup';
 
 import HomeCard from '../cards/dashboard/Home';
-import AnalyticsCard from '../cards/dashboard/Analytics';
-import DiscountsCard from '../cards/dashboard/Discounts';
-import MarketingCard from '../cards/dashboard/Marketing';
-import CustomersCard from '../cards/dashboard/Customers';
-import SegmentsCard from '../cards/dashboard/Home';
+import CollectionCard from '../cards/dashboard/Collection';
+import InventoryCard from '../cards/dashboard/Inventory';
+import ProductsCard from '../cards/dashboard/Products';
 
 const Router = () => {
     return <BrowserRouter>
@@ -25,11 +23,10 @@ const Router = () => {
 
             <Route element={<DashboardLayout />}>
                 <Route path={ROUTES.BASE} element={<HomeCard />} />
-                <Route path={ROUTES.ANALYTICS} element={<AnalyticsCard />} />
-                <Route path={ROUTES.DISCOUNTS} element={<DiscountsCard />} />
-                <Route path={ROUTES.MARKETING} element={<MarketingCard />} />
-                <Route path={ROUTES.CUSTOMERS} element={<CustomersCard />} />
-                <Route path={ROUTES.SEGMENTS} element={<SegmentsCard />} />
+                <Route path={ROUTES.PRODUCTS} element={<ProductsCard />} />
+                <Route path={ROUTES.COLLECTION} element={<CollectionCard />} />
+                <Route path={ROUTES.INVENTORY} element={<InventoryCard />} />
+                <Route path='*' element={<Navigate to={ROUTES.BASE} />} />
             </Route>
         </Routes>
     </BrowserRouter>

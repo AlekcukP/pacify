@@ -4,11 +4,15 @@ export const commonSlice = createSlice({
     name: 'common',
 
     initialState: {
+        isSidebarOpen: false,
         isPasswordDisplayed: false,
         isLoading: false
     },
 
     reducers: {
+        setSidebarOpen: (state, { payload }) => {
+            state.isSidebarOpen = payload;
+        },
         setPasswordDisplay: (state, { payload }) => {
             state.isPasswordDisplayed = payload;
         },
@@ -18,4 +22,4 @@ export const commonSlice = createSlice({
     }
 });
 
-export const { setPasswordDisplay, setLoading } = commonSlice.actions;
+export const { setPasswordDisplay, setLoading, setSidebarOpen } = commonSlice.actions;

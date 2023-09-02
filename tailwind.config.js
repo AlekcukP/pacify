@@ -14,6 +14,20 @@ export default {
           '0%': { width: '5%' },
           '100%': { width: '100%' },
         },
+      },
+      width: {
+        '128': '32rem',
+      },
+      height: {
+        '128': '32rem',
+      },
+      screens: {
+        'xs': '475px',
+        'max-xl': {'max': '1279px'},
+        'max-lg': {'max': '1023px'},
+        'max-md': {'max': '767px'},
+        'max-sm': {'max': '639px'},
+        'max-xs': {'max': '475px'},
       }
     },
   },

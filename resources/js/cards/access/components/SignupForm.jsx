@@ -21,34 +21,34 @@ export default createForm({
             name: 'email',
             type: 'email',
             label: 'Email',
-            className: 'col-span-2'
+            className: 'basis-full'
         },
         {
             name: 'first_name',
             label: 'First Name',
-            className: 'col-span-1'
+            className: 'basis-full md:flex-1 md:mr-1'
         },
         {
             name: 'last_name',
             label: 'Last Name',
-            className: 'col-span-1'
+            className: 'basis-full md:flex-1 md:ml-1'
         },
         {
             name: 'password',
             type: 'password',
             label: 'Password',
-            className: 'col-span-2'
+            className: 'basis-full'
         },
         {
             name: 'password_confirmation',
             type: 'password',
             label: 'Confirm Password',
-            className: 'col-span-2'
+            className: 'basis-full'
         },
     ],
     formButton: {
-        className: 'btn-primary col-span-2 h-11',
+        className: 'btn-primary h-11 mt-2',
         label: 'Create an Account',
     },
-    className: 'grid grid-cols-2 grid-rows-5 gap-y-2 gap-x-1'
+    className: 'flex flex-wrap h-96 md:128'
 })(Form);
