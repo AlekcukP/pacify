@@ -4,7 +4,7 @@ import BurgerMenu from "./BurgerMenu";
 import Logo from "../../components/Logo";
 import defaultProfile from '../../../assets/images/default_profile.svg';
 import { DarkThemeToggle } from 'flowbite-react';
-import { useSignOut } from "../../actions/auth";
+import { useSignOut } from "../../hooks/auth/actions";
 
 const { Brand } = ReactNavbar;
 const { Header, Divider, Item } = Dropdown;

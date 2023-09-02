@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "./Image";
-import { useLogo } from "../hooks/useCommon";
+import { useThemeState } from "../hooks/app/state";
 
 const Logo = ({ width, className }) => {
-    const logo = useLogo();
+    const { logo } = useThemeState();
 
     return <Image alt={"Pacify logo"} src={logo} width={width} className={className} />;
 };

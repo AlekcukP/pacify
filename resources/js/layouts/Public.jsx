@@ -1,11 +1,11 @@
 import React from 'react';
 import { ROUTES } from '../app/routes';
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
-import { useAuth } from '../hooks/useAuth';
+import { useAuthState } from '../hooks/auth/state';
 import { classnames } from 'tailwindcss-classnames';
 
 const PublicLayout = () => {
-    const { authenticated } = useAuth();
+    const { authenticated } = useAuthState();
     const location = useLocation();
 
     if (authenticated) {

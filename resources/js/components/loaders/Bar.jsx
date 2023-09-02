@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import classnames from 'tailwindcss-classnames';
-import { useCommon } from '../../hooks/useCommon';
+import { useComponentsState } from '../../hooks/components/state';
 import { Progress } from 'flowbite-react';
 
 
 const BarLoader = () => {
     const [progress, setProgress] = useState(10);
-    const { isLoading } = useCommon();
+    const { isLoading } = useComponentsState();
 
     useEffect(() => {
         let interval;

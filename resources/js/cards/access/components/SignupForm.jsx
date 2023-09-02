@@ -1,5 +1,5 @@
 import Form , { createForm } from "../../../components/forms/form";
-import { useSignUp } from "../../../actions/auth";
+import { useSignUp } from "../../../hooks/auth/actions";
 
 export default createForm({
     form: "register",

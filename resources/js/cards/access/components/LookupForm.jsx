@@ -1,5 +1,5 @@
 import Form, { createForm } from '../../../components/forms/form';
-import { useLookUp } from "../../../actions/auth";
+import { useLookUp } from '../../../hooks/auth/actions';
 
 export default createForm({
     form: "login",

@@ -1,7 +1,7 @@
 import React from "react";
 import { classnames } from "tailwindcss-classnames";
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
-import { useOpenSidebar } from "../../actions/common";
+import { useOpenSidebar } from "../../hooks/components/actions";
 
 const BurgerMenu = () => {
     const openSidebar = useOpenSidebar();

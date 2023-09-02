@@ -2,7 +2,7 @@ import _ from "lodash";
 import axios, { AxiosHeaders, HttpStatusCode } from "axios";
 import { createApi } from '@reduxjs/toolkit/query/react';
 import Cookies from "js-cookie";
-import { setLoading } from "../redux/common";
+import { startLoading, stopLoading } from "../redux/components";
 
 export const baseQuery = ({ baseUrl } = { baseUrl: '/' }) => async (args, { getState, dispatch }) => {
     const { body, params, url, withCredentials, method, headers } = args;
@@ -27,18 +27,18 @@ export const baseQuery = ({ baseUrl } = { baseUrl: '/' }) => async (args, { getS
     axios.interceptors.request.use((config) => {
         if (withCredentials && !Cookies.get('XSRF-TOKEN')) axios('/sanctum/csrf-cookie');
         if (!withCredentials && token) config.headers.setAuthorization('Authorization', `Bearer ${token}`);
-        if (!config.headers.has('Precognition')) dispatch(setLoading(true));
+        if (!config.headers.has('Precognition')) dispatch(startLoading());
 
         return config;
     });
 
     axios.interceptors.response.use(
         (response) => {
-            if (!response.headers.has('Precognition')) dispatch(setLoading(false));
+            if (!response.headers.has('Precognition')) dispatch(stopLoading());
             return response;
         },
         (error) => {
-            if (!error.config.headers.has('Precognition')) dispatch(setLoading(false));
+            if (!error.config.headers.has('Precognition')) dispatch(stopLoading());
             return Promise.reject(error);
         }
     );

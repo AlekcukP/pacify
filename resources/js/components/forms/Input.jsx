@@ -1,11 +1,10 @@
-import React, { useCallback, useId } from 'react';
+import React, { useId } from 'react';
 import { Label as TextInputLabel, TextInput } from 'flowbite-react';
 import { BsFillExclamationCircleFill } from "react-icons/bs";
 import { AiFillEye } from "react-icons/ai";
 import { AiFillEyeInvisible } from "react-icons/ai";
-import { useCommon } from '../../hooks/useCommon';
-import { setPasswordDisplay } from '../../redux/common';
-import { useDispatch } from 'react-redux';
+import { useComponentsState } from '../../hooks/components/state';
+import { useDisplayPassword, useHidePassword } from '../../hooks/components/actions';
 import { classnames } from 'tailwindcss-classnames';
 
 const theme = {
@@ -31,20 +30,13 @@ const Error = ({ error }) => <p className="flex items-center tracking-[-.075em] 
 </p>;
 
 const PasswordIcon = () => {
-    const { isPasswordDisplayed } = useCommon();
-    const dispatch = useDispatch();
-
-    const showPassword = useCallback(() => {
-        dispatch(setPasswordDisplay(true));
-    }, []);
-
-    const hidePassword = useCallback(() => {
-        dispatch(setPasswordDisplay(false));
-    }, []);
+    const { isPasswordDisplayed } = useComponentsState();
+    const displayPassword = useDisplayPassword();
+    const hidePassword = useHidePassword();
 
     if (isPasswordDisplayed) return <AiFillEye className='text-gray-400' size={20} onClick={hidePassword} />;
 
-    return <AiFillEyeInvisible className='text-gray-400' size={20} onClick={showPassword}/>;
+    return <AiFillEyeInvisible className='text-gray-400' size={20} onClick={displayPassword}/>;
 };
 
 const isPassword = (type) => type === Input.types.password;
@@ -87,7 +79,7 @@ const Input = ({
     icon,
     rightIcon,
 }) => {
-    const { isPasswordDisplayed } = useCommon();
+    const { isPasswordDisplayed } = useComponentsState();
     const { error, valid, dirty } = meta;
     const id = useId();
 

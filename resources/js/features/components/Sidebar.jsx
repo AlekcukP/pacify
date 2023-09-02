@@ -2,11 +2,11 @@ import React, { Fragment } from "react";
 import _ from "lodash";
 import classnames from 'tailwindcss-classnames';
 import { NavLink } from "react-router-dom";
-import { useCommon } from "../../hooks/useCommon";
+import { useComponentsState } from "../../hooks/components/state";
 import { ROUTES } from "../../app/routes";
 import { Sidebar as ReactSidebar } from 'flowbite-react';
-import { useLogo } from "../../hooks/useCommon";
-import { useCloseSidebar } from "../../actions/common";
+import { useThemeState } from "../../hooks/app/state";
+import { useCloseSidebar } from "../../hooks/components/actions";
 import { AiFillHome } from "react-icons/ai";
 import { HiCollection } from "react-icons/hi";
 import { MdInventory } from "react-icons/md";
@@ -83,8 +83,8 @@ const theme = {
 };
 
 const SidebarMenu = ({ children }) => {
-    const { isSidebarOpen } = useCommon();
-    const logo = useLogo();
+    const { isSidebarOpen } = useComponentsState();
+    const { logo } = useThemeState();
 
     return <ReactSidebar theme={theme} className={classnames({ 'translate-x-0': isSidebarOpen })}>
         <Logo img={logo} imgAlt="Logo" theme={theme.logo}></Logo>
@@ -108,7 +108,7 @@ const SidebarTab = ({path, label, icon: Icon }) => {
 };
 
 const SidebarBackground = () => {
-    const { isSidebarOpen } = useCommon();
+    const { isSidebarOpen } = useComponentsState();
     const { closeSidebar } = useCloseSidebar();
 
     return <div onClick={closeSidebar} className={classnames(

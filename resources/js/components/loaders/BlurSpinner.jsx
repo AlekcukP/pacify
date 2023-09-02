@@ -1,11 +1,11 @@
 import React from 'react';
 import { classnames } from 'tailwindcss-classnames';
 import { Spinner } from 'flowbite-react';
-import { useCommon } from '../../hooks/useCommon';
+import { useComponentsState } from '../../hooks/components/state';
 
 
 const BlurSpinner = () => {
-    const { isLoading } = useCommon();
+    const { isLoading } = useComponentsState();
 
     return <div className={classnames('h-full', 'w-full', 'absolute', 'top-0', 'left-0',{ ['hidden']: !isLoading })}>
         <div className={classnames('w-full', 'h-full', 'absolute', 'z-10', 'flex', 'items-center', 'justify-center')}>

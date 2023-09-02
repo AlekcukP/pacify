@@ -15,7 +15,8 @@ import {
 import { unauthenticatedMiddleware } from '../middleware/unauthenticated';
 
 import { authSlice } from './auth';
-import { commonSlice} from './common';
+import { componentsSlice} from './components';
+import { appSlice } from './app';
 
 import { api } from '../api/api';
 import { validateApi } from '../api/validate';
@@ -23,7 +24,8 @@ import { validateApi } from '../api/validate';
 const rootReducer = combineReducers({
     form: formReducer,
     [authSlice.name]: authSlice.reducer,
-    [commonSlice.name]: commonSlice.reducer,
+    [componentsSlice.name]: componentsSlice.reducer,
+    [appSlice.name]: appSlice.reducer,
     [api.reducerPath]: api.reducer,
     [validateApi.reducerPath]: validateApi.reducer,
 });
@@ -31,7 +33,7 @@ const rootReducer = combineReducers({
 const persistedReducer = persistReducer({
     key: 'root',
     storage: storage('stateDB'),
-    blacklist: ['form', commonSlice.name]
+    blacklist: ['form', componentsSlice.name]
 }, rootReducer);
 
 export const store = configureStore({
