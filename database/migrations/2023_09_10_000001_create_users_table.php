@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('password');
-            $table->unsignedBigInteger('group_id')->default(2);
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email')->unique();
+            $table->foreignId('group_id')->default(2);
+            $table->string('first_name', 30);
+            $table->string('last_name', 30);
+            $table->string('email', 320)->unique()->index();
             $table->timestamp('email_verified_at')->nullable();
             $table->date('birth_date')->nullable();
             $table->enum('gender', ['male', 'female'])->nullable();
@@ -25,7 +25,6 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            $table->index(['email', 'password']);
             $table->foreign('group_id')->references('id')->on('user_groups');
         });
     }

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\User\Invitation;
 
-class CheckInvitation
+class CheckRegistrationPermission
 {
     /**
      * Handle an incoming request.
@@ -20,7 +20,7 @@ class CheckInvitation
             return response()->json([
                 'status' => false,
                 'message' => "Permission denied. Invalid invite token."
-            ], 402);
+            ], 403);
         }
 
         return $next($request);

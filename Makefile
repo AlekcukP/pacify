@@ -2,6 +2,7 @@
 # WEB_SERVICE_NAME=pacify-dev
 # EXEC_USER=www-data
 
+# DOCKER COMMANDS
 .PHONY: up
 up:
 	./vendor/bin/sail up -d
@@ -30,12 +31,19 @@ proxy:
 unproxy:
 	valet unproxy pacify
 
+# YARN COMMANDS
 .PHONY: watch
 watch:
 	yarn watch-dev
 
-# .PHONY: bash
-# bash:
-# 	docker-compose exec -w /var/www -u ${EXEC_USER} ${WEB_SERVICE_NAME} bash
+# ARTISAN COMMANDS
+.PHONY: migrate
+migrate:
+	php artisan migrate
+
+.PHONY: rollback
+rollback:
+	php artisan migrate:rollback
+
 
 

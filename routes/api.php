@@ -16,7 +16,10 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::post('/register', [AuthController::class, 'register'])->middleware('invited')->name('register');
+Route::post('/register', [AuthController::class, 'register'])
+    ->middleware('register.allowed')
+    ->name('register');
+
 Route::post('/login', [AuthController::class, 'login']);
 
 

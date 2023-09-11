@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('user_groups', function (Blueprint $table) {
             $table->id();
-            $table->tinyText('name');
-            $table->string('scopes')->nullable();
+            $table->string('name', 20);
+            $table->text('description')->nullable();
+            $table->text('scopes')->nullable();
         });
 
         DB::table('user_groups')->insert([
