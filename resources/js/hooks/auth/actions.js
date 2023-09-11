@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { SubmissionError } from "redux-form";
-import { resetCredentials, setCredentials } from "../../redux/auth";
 import { useRegisterMutation, useLoginMutation } from "../../api/auth";
 
 export const useSignOut = () => {

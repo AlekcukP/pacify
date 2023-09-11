@@ -6,30 +6,39 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User\Invitation;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Arr;
+use App\Enums\UserGroups;
+
 class AuthController extends Controller
 {
     public function register(RegisterRequest $request)
     {
         $data = $request->safe()->all();
+        $group = UserGroups::MERCHANT;
 
         $user = User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => $data['password'],
+            'group_id' => $group->id()
         ]);
 
-        $tokenName = $user->getTokenName();
-        $token = $user->createToken($tokenName);
+        Invitation::find($request->query('rid'))->update([
+            'user_id' => $user->id,
+            'used_at' => now()
+        ]);
 
-        response()->json([
+        $token = $user->createToken("{$group->name}_{$user->id}_token");
+
+        dd($token);
+
+        return response()->json([
             'status' => true,
             'message' => 'User created successfully.',
             'user' => $user,
-            'token' => $token->plainTextToken
+            'token' => $token->accessToken
         ]);
     }
 
@@ -45,7 +54,7 @@ class AuthController extends Controller
                 'status' => true,
                 'message' => 'User logged in successfully.',
                 'user' => $request->user(),
-                'token' => $token->plainTextToken
+                'token' => $token->accessToken
             ]);
         }
 

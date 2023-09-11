@@ -5,8 +5,9 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\User\Invitation;
 
-class StripTags
+class CheckInvitation
 {
     /**
      * Handle an incoming request.
@@ -15,13 +16,12 @@ class StripTags
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $input = $request->all();
-
-        array_walk_recursive($input, function(&$input) {
-            $input = strip_tags($input);
-        });
-
-        $request->merge($input);
+        if (!$request->query('rid') || !Invitation::find($request->query('rid'))) {
+            return response()->json([
+                'status' => false,
+                'message' => "Permission denied. Invalid invite token."
+            ], 402);
+        }
 
         return $next($request);
     }
