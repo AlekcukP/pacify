@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use \Laravel\Passport\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\User\Details;
+use App\Models\Store;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+
 
 class User extends Authenticatable
 {
@@ -30,8 +36,6 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'account_type',
-        'birth_date',
-        'gender',
         'account_status',
         'created_at',
     ];
@@ -55,4 +59,41 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => UserDetailsCreated::class,
+    ];
+
+    /**
+     * Get the user's full name.
+     */
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn (mixed $value, array $attributes) => (
+                $attributes['first_name'] . ' ' . $attributes['last_name']
+            )
+        );
+    }
+
+    /**
+     * Get the details associated with the user.
+     */
+    public function details(): HasOne
+    {
+        return $this->hasOne(Details::class);
+    }
+
+    /**
+     * Get the stores associated with the user.
+     */
+    public function stores(): HasMany
+    {
+        return $this->hasMany(Store::class);
+    }
 }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignIdFor(User::class)->nullable()->index();
             $table->foreignIdFor(Store::class)->nullable()->index();
-            $table->string('name', 50);
+            $table->string('name', 50)->unique();
             $table->string('secret', 100)->nullable();
             $table->string('provider')->nullable();
             $table->text('redirect');

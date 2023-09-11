@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Models\User\Invitation;
+use Laravel\Passport\Client;
 
 class CheckRegistrationPermission
 {
@@ -16,7 +16,7 @@ class CheckRegistrationPermission
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->query('rid') || !Invitation::find($request->query('rid'))) {
+        if (!$request->query('rid') || !Client::find($request->query('rid'))) {
             return response()->json([
                 'status' => false,
                 'message' => "Permission denied. Invalid invite token."

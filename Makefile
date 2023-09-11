@@ -45,5 +45,9 @@ migrate:
 rollback:
 	php artisan migrate:rollback
 
+.PHONY: client
+client:
+	php artisan passport:client
+
 
 

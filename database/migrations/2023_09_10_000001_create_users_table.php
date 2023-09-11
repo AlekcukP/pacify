@@ -19,8 +19,6 @@ return new class extends Migration
             $table->string('last_name', 30);
             $table->string('email', 320)->unique()->index();
             $table->timestamp('email_verified_at')->nullable();
-            $table->date('birth_date')->nullable();
-            $table->enum('gender', ['male', 'female'])->nullable();
             $table->enum('account_status', ['active', 'suspended', 'deactivated'])->default('active');
             $table->rememberToken();
             $table->timestamps();

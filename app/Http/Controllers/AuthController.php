@@ -6,7 +6,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\User\Invitation;
+use Laravel\Passport\Client;
 use Illuminate\Support\Facades\Auth;
 use App\Enums\UserGroups;
 
@@ -14,31 +14,27 @@ class AuthController extends Controller
 {
     public function register(RegisterRequest $request)
     {
-        $data = $request->safe()->all();
-        $group = UserGroups::MERCHANT;
-
         $user = User::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'email' => $data['email'],
-            'password' => $data['password'],
-            'group_id' => $group->id()
+            'first_name' => $request->validated('first_name'),
+            'last_name' => $request->validated('last_name'),
+            'email' => $request->validated('email'),
+            'password' => $request->validated('password'),
+            'group_id' => UserGroups::MERCHANT->id()
         ]);
 
-        Invitation::find($request->query('rid'))->update([
-            'user_id' => $user->id,
-            'used_at' => now()
-        ]);
-
-        $token = $user->createToken("{$group->name}_{$user->id}_token");
-
-        dd($token);
+        $client = Client::find($request->query('rid'));
+        $client->user_id = $user->id;
+        $client->save();
 
         return response()->json([
             'status' => true,
             'message' => 'User created successfully.',
-            'user' => $user,
-            'token' => $token->accessToken
+            'user' => [
+                'email' => '',
+                'first_name' => '',
+                'last_name' => '',
+            ],
+            'token' => $user->createToken($client->id)->accessToken
         ]);
     }
 
@@ -85,6 +81,16 @@ class AuthController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Logged out.'
+        ]);
+    }
+
+    public function createClient()
+    {
+        $client = Client::newFactory()->createOne();
+
+        return response()->json([
+            'rid' => $client->id,
+            'link' => route('register', ['rid' => $client->id])
         ]);
     }
 }

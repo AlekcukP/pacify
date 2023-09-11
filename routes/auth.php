@@ -20,22 +20,8 @@ Route::post('/register', [AuthController::class, 'register'])
     ->middleware('register.allowed')
     ->name('register');
 
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])
+    ->name('login');;
 
-Route::post('/invitation', [AuthController::class, 'createClient']);
-
-Route::middleware('auth:api')->group(function () {
-
-    Route::get('/', function () {
-        return 'Hi';
-    });
-    Route::post('/', function () {
-        return 'Post';
-    });
-    Route::get('/customers', function () {
-        return 'Customers Hi';
-    });
-    Route::post('/customers', function () {
-        return 'Customers Post';
-    });
-});
+Route::post('/client', [AuthController::class, 'createClient'])
+    ->name('client');
