@@ -15,16 +15,12 @@ return new class extends Migration
     {
         Schema::create('oauth_auth_codes', function (Blueprint $table) {
             $table->string('id', 100)->primary();
-            $table->foreignIdFor(User::class)->index();
-            $table->foreignIdFor(Store::class)->index();
-            $table->foreignUuid('client_id');
+            $table->foreignIdFor(User::class)->nullable()->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Store::class)->nullable()->constrained()->onDelete('cascade');
+            $table->foreignUuid('client_id')->constrained('oauth_clients')->onDelete('cascade');
             $table->text('scopes')->nullable();
-            $table->boolean('revoked');
+            $table->boolean('revoked')->default(0);
             $table->dateTime('expires_at')->nullable();
-
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('store_id')->references('id')->on('stores');
-            $table->foreign('client_id')->references('id')->on('oauth_clients');
         });
     }
 

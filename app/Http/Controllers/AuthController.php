@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
-use Illuminate\Http\Request;
-use App\Models\User;
-use Laravel\Passport\Client;
-use Illuminate\Support\Facades\Auth;
 use App\Enums\UserGroups;
+use App\Models\User;
+use App\Models\Invitation;
 
 class AuthController extends Controller
 {
@@ -22,75 +20,50 @@ class AuthController extends Controller
             'group_id' => UserGroups::MERCHANT->id()
         ]);
 
-        $client = Client::find($request->query('rid'));
-        $client->user_id = $user->id;
-        $client->save();
+        Invitation::find($request->query('iid'))->update(['user_id' => $user->id]);
 
-        return response()->json([
-            'status' => true,
-            'message' => 'User created successfully.',
+        return $this->response([
             'user' => [
-                'email' => '',
-                'first_name' => '',
-                'last_name' => '',
+                'email' => $user->email,
+                'full_name' => $user->full_name,
+                'avatar' => $user->details->avatar,
+                'group' => $user->group->name
             ],
-            'token' => $user->createToken($client->id)->accessToken
+            'token' => auth()->login($user)
         ]);
     }
 
     public function login(LoginRequest $request)
     {
-        $credentials = $request->safe()->all();
+        if ($token = auth()->attempt($request->safe(['email', 'password']))) {
+            $user = auth()->user();
 
-        if (Auth::attempt($credentials)) {
-            $tokenName = $request->user()->getTokenName();
-            $token = $request->user()->createToken($tokenName);
-
-            return response()->json([
+            return $this->response([
                 'status' => true,
                 'message' => 'User logged in successfully.',
-                'user' => $request->user(),
-                'token' => $token->accessToken
+                'user' => [
+                    'email' => $user->email,
+                    'full_name' => $user->full_name,
+                    'avatar' => $user->details->avatar,
+                    'group' => $user->group->name
+                ],
+                'token' => $token
             ]);
         }
 
-        return response()->json([
-            'status' => false,
-            'message' => 'The provided credentials are incorrect.',
-        ], 400);
-    }
-
-    public function user(Request $request)
-    {
-        if (Auth::check()) {
-            return response()->json([
-                'status' => true,
-                'message' => 'User logged in successfully.',
-                'user' => Auth::user()
-            ]);
-        }
-
-        return redirect('unauthenticated');
-    }
-
-    public function logout(Request $request)
-    {
-        auth()->user()->tokens()->delete();
-        $request->session()->regenerateToken();
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Logged out.'
+        return $this->error('Incorrect password.', 400, [
+            'password' => 'Password is incorrect.'
         ]);
     }
 
-    public function createClient()
+    protected function invite()
     {
-        $client = Client::newFactory()->createOne();
+        $invitation = Invitation::new();
 
-        return response()->json([
-            'rid' => $client->id,
-            'link' => route('register', ['rid' => $client->id])
+        return $this->response([
+            'iid' => $invitation->id,
+            'expires_at' => $invitation->expires_at,
+            'link' => $invitation->link
         ]);
     }
 }

@@ -52,7 +52,7 @@ protected function promptForMissingArgumentsUsing()
 
         $validator = Validator::make(
             ['email' => $username, 'group' => $group],
-            ['email' => Rule::unique(User::class), 'group' => Rule::in(UserGroups::values())]
+            ['email' => [Rule::unique(User::class), 'email'], 'group' => Rule::in(UserGroups::values())]
         );
 
         if ($validator->fails()) {

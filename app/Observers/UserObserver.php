@@ -18,6 +18,8 @@ class UserObserver
      */
     public function created(User $user): void
     {
-        $user->details()->findOrCreate(['user_id' => $user->id]);
+        $user->details()->create([
+            'user_id' => $user->id,
+        ]);
     }
 }

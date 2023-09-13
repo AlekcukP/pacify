@@ -4,18 +4,20 @@ namespace App\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\User;
+use App\Models\Store;
 
-class UserCreated
+class StoreCreated
 {
     use Dispatchable, SerializesModels;
 
-    public $user;
+    public $store;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(User $user) {
-        $this->user = $user;
+    public function __construct(Store $store)
+    {
+        $this->store = $store;
     }
+
 }

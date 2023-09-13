@@ -14,8 +14,7 @@ return new class extends Migration
     {
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->foreignIdFor(User::class)->index();
+            $table->foreignIdFor(User::class)->index()->constrained()->onDelete('cascade');
             $table->string('name', 30)->index();
             $table->string('legal_name', 30)->nullable();
             $table->string('email', 320)->nullable();
@@ -26,8 +25,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('apt')->nullable();
             $table->string('city', 85)->nullable();
             $table->char('post_code', 10)->nullable();
-
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
         });
     }
 

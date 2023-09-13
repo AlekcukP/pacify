@@ -14,12 +14,10 @@ return new class extends Migration
     {
         Schema::create('user_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->index();
+            $table->foreignIdFor(User::class)->index()->constrained()->onDelete('cascade');
             $table->date('birth_date')->nullable();
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->string('avatar')->default('default_avatar.svg');
-
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

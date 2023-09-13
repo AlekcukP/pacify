@@ -2,20 +2,25 @@
 
 namespace App\Models;
 
+// use Laravel\Passport\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use \Laravel\Passport\HasApiTokens;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Events\UserCreated;
 use App\Models\User\Details;
+use App\Models\User\Group;
 use App\Models\Store;
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Enums\UserGroups;
 
-
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory, Notifiable;
 
     /**
      * The table associated with the model.
@@ -66,19 +71,34 @@ class User extends Authenticatable
      * @var array
      */
     protected $dispatchesEvents = [
-        'created' => UserDetailsCreated::class,
+        'created' => UserCreated::class,
     ];
 
+
+
     /**
-     * Get the user's full name.
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
      */
-    protected function fullName(): Attribute
+    public function getJWTIdentifier()
     {
-        return Attribute::make(
-            get: fn (mixed $value, array $attributes) => (
-                $attributes['first_name'] . ' ' . $attributes['last_name']
-            )
-        );
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
+    public function isAdmin()
+    {
+        return $this->group->name === UserGroups::ADMIN->value;
     }
 
     /**
@@ -95,5 +115,25 @@ class User extends Authenticatable
     public function stores(): HasMany
     {
         return $this->hasMany(Store::class);
+    }
+
+    /**
+     * Get the user that owns the details.
+     */
+    public function group(): BelongsTo
+    {
+        return $this->belongsTo(Group::class);
+    }
+
+    /**
+     * Get the user's full name.
+     */
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn (mixed $value, array $attributes) => (
+                $attributes['first_name'] . ' ' . $attributes['last_name']
+            )
+        );
     }
 }

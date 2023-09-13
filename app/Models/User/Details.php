@@ -25,10 +25,26 @@ class Details extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'user_id',
         'avatar',
         'birth_date',
         'gender',
     ];
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
+     * Get the user that owns the details.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * Get the user's avatar path.
@@ -38,13 +54,5 @@ class Details extends Model
         return Attribute::make(
             get: fn (string $value) => app()->joinPaths(public_path('avatars'), $value),
         );
-    }
-
-    /**
-     * Get the user that owns the details.
-     */
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
     }
 }

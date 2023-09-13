@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('oauth_clients', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignIdFor(User::class)->nullable()->index();
-            $table->foreignIdFor(Store::class)->nullable()->index();
-            $table->string('name', 50)->unique();
+            $table->foreignIdFor(User::class)->nullable()->index()->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Store::class)->nullable()->index()->constrained()->onDelete('cascade');
+            $table->string('name', 30);
             $table->string('secret', 100)->nullable();
             $table->string('provider')->nullable();
             $table->text('redirect');
@@ -25,9 +25,6 @@ return new class extends Migration
             $table->boolean('password_client');
             $table->boolean('revoked');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('store_id')->references('id')->on('stores');
         });
     }
 

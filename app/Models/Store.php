@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\StoreCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -36,6 +37,15 @@ class Store extends Authenticatable
         'apt',
         'city',
         'post_code'
+    ];
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => StoreCreated::class,
     ];
 
         /**
