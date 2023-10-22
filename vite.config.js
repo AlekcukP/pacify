@@ -21,8 +21,10 @@ export default defineConfig(({ mode }) => {
             sourcemap: true
         },
         define: {
-            __APP_NAME__: JSON.stringify(env.VITE_APP_NAME),
-            __APP_URL__: JSON.stringify(env.APP_URL),
+            __APP_CONFIG__: JSON.stringify({
+                domain: env.VITE_APP_DOMAIN,
+                tld: env.VITE_APP_TLD
+            }),
         }
     }
 });

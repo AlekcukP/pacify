@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { SubmissionError } from "redux-form";
 import { useRegisterMutation, useLoginMutation } from "../../api/auth";
 
-export const useSignOut = () => {
+export const useLogOut = () => {
     const dispatch = useDispatch();
     return  useCallback(() => dispatch(resetCredentials()));
 };

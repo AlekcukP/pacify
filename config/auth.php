@@ -37,12 +37,8 @@ return [
 
     'guards' => [
         'web' => [
-            'driver' => 'jwt',
+            'driver' => 'session',
             'provider' => 'users',
-        ],
-        'api' => [
-            'driver' => 'passport',
-            'provider' => 'stores',
         ],
     ],
 
@@ -67,11 +63,7 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
-        ],
-        'stores' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Store::class,
-        ],
+        ]
     ],
 
     /*

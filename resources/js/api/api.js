@@ -3,19 +3,32 @@ import axios, { AxiosHeaders, HttpStatusCode } from "axios";
 import { createApi } from '@reduxjs/toolkit/query/react';
 import Cookies from "js-cookie";
 import { startLoading, stopLoading } from "../redux/components";
+import UrlHelper from "../helpers/url";
+import { config } from "../app/config";
 
-export const baseQuery = ({ baseUrl } = { baseUrl: '/' }) => async (args, { getState, dispatch }) => {
+export const baseQuery = (
+    { baseUrl, subdomain, prepareHeaders } = { baseUrl: '/', subdomain: '', prepareHeaders: null }
+) => async (args, { getState, dispatch }) => {
     const { body, params, url, withCredentials, method, headers } = args;
     const { token } = getState().auth;
 
+    console.log(baseUrl, 'baseUrl')
+    console.log(subdomain, 'subdomain')
+
+    // baseUrl.appendSubdomain(subdomain);
+
+    // if (_.isFunction(prepareHeaders)) {
+    //     console.log('here')
+    // }
+
     const config = {
-        baseUrl: baseUrl,
-        url: url,
+        url: baseUrl,
         method: method ?? axios.get.name,
         data: body,
         headers: new AxiosHeaders({
             'X-Requested-With': 'XMLHttpRequest',
             'Content-Type': 'application/json',
+            'Accept': 'application/json',
             ...headers,
         }),
         xsrfCookieName: 'XSRF-TOKEN',
@@ -64,7 +77,7 @@ export const baseQuery = ({ baseUrl } = { baseUrl: '/' }) => async (args, { getS
 export const api = createApi({
     reducerPath: 'api',
     baseQuery: baseQuery({
-        baseUrl: '/api'
+        baseUrl: UrlHelper.getBaseUrl()
     }),
     endpoints: () => ({})
 });

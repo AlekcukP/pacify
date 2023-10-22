@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { ReduxFormContext, Form, reduxForm, Fields } from 'redux-form';
 import Input from './Input';
 import Button from './Button';
-import { validate } from '../../api/validate';
+import { validate } from '../../api/forms';
 
 const renderFields = (fields) => {
     const { formFields } = useContext(ReduxFormContext);

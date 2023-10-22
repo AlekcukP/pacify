@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Console\Isolatable;
-use App\Enums\UserGroups;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -18,8 +17,7 @@ class MakeUser extends Command implements Isolatable
      */
     protected $signature = 'make:user
                             {username : Email or any unique name for the user record}
-                            {password : Password for the user record}
-                            {--group=merchant : Assign specific group to the user}';
+                            {password : Password for the user record}';
 
     /**
      * The console command description.
@@ -48,32 +46,28 @@ protected function promptForMissingArgumentsUsing()
     {
         $password = $this->argument('password');
         $username = $this->argument('username');
-        $group = $this->option('group');
 
         $validator = Validator::make(
-            ['email' => $username, 'group' => $group],
-            ['email' => [Rule::unique(User::class), 'email'], 'group' => Rule::in(UserGroups::values())]
+            ['email' => $username],
+            ['email' => [Rule::unique(User::class), 'email']]
         );
 
         if ($validator->fails()) {
             return $this->error($validator->errors()->toJson());
         }
 
-        $user_group = UserGroups::from($group);
 
         $user = User::create([
             'first_name' => 'Admin',
             'last_name' => 'Admin',
             'email' => $username,
-            'password' => $password,
-            'group_id' => $user_group->id()
+            'password' => $password
         ]);
 
         $this->info('User created successfully');
         $this->info(json_encode([
             'username' => $user->email,
-            'password' => $password,
-            'group' => $user_group->value
+            'password' => $password
         ]));
     }
 }

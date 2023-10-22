@@ -29,7 +29,21 @@ class Invitation extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['user_id', 'expires_at'];
+    protected $fillable = ['expires_at'];
+
+    /**
+     * The attributes that should be visible in arrays.
+     *
+     * @var array
+     */
+    protected $visible = ['id', 'expires_at', 'link'];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['link'];
 
     /**
      * The attributes that should be cast.
@@ -54,6 +68,12 @@ class Invitation extends Model
     public function isUsed()
     {
         return !is_null($this->user_id);
+    }
+
+    public function used(User $user)
+    {
+        $this->user_id = $user->id;
+        $this->save();
     }
 
     /**

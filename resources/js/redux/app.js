@@ -1,15 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-const themes = {
-    light: 'light',
-    dark: 'dark',
-};
+import { config } from './config';
 
 export const appSlice = createSlice({
     name: 'app',
 
     initialState: {
-        theme: themes.light,
+        theme: config.get('APP_THEMES').LIGHT,
     },
 
     reducers: {

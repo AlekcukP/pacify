@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Models\Store;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 class StoreController extends Controller
 {
@@ -16,12 +17,10 @@ class StoreController extends Controller
 
     public function create(Request $request)
     {
-        $store = Store::create([
-            'user_id' => auth()->user()->id,
-            'name' => auth()->user()->full_name . 'Store'
-        ]);
-
-        return $this->response(['store' => $store]);
+        return Store::create([
+            'name' => Str::random(16),
+            'user_id' => auth()->user()->id
+        ])->toArray();
     }
 
     public function update(Request $request, string $id)

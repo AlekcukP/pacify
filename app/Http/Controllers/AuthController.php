@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
-use App\Enums\UserGroups;
 use App\Models\User;
 use App\Models\Invitation;
 
@@ -16,54 +15,43 @@ class AuthController extends Controller
             'first_name' => $request->validated('first_name'),
             'last_name' => $request->validated('last_name'),
             'email' => $request->validated('email'),
-            'password' => $request->validated('password'),
-            'group_id' => UserGroups::MERCHANT->id()
+            'password' => $request->validated('password')
         ]);
 
-        Invitation::find($request->query('iid'))->update(['user_id' => $user->id]);
+        $request->invitation->used($user);
 
-        return $this->response([
+        return [
             'user' => [
                 'email' => $user->email,
                 'full_name' => $user->full_name,
-                'avatar' => $user->details->avatar,
-                'group' => $user->group->name
+                'avatar' => $user->details->avatar
             ],
-            'token' => auth()->login($user)
-        ]);
+            'token' => $user->createToken('Admin Token', ['store:create'])->plainTextToken
+        ];
     }
 
     public function login(LoginRequest $request)
     {
-        if ($token = auth()->attempt($request->safe(['email', 'password']))) {
+        if (auth()->attempt($request->safe(['email', 'password']))) {
             $user = auth()->user();
 
-            return $this->response([
-                'status' => true,
-                'message' => 'User logged in successfully.',
+            return [
                 'user' => [
                     'email' => $user->email,
                     'full_name' => $user->full_name,
-                    'avatar' => $user->details->avatar,
-                    'group' => $user->group->name
+                    'avatar' => $user->details->avatar
                 ],
-                'token' => $token
-            ]);
+                'token' => $user->createToken('Admin Token', ['store:create'])->plainTextToken
+            ];
         }
 
-        return $this->error('Incorrect password.', 400, [
+        return response()->json([
             'password' => 'Password is incorrect.'
-        ]);
+        ], 400);
     }
 
     protected function invite()
     {
-        $invitation = Invitation::new();
-
-        return $this->response([
-            'iid' => $invitation->id,
-            'expires_at' => $invitation->expires_at,
-            'link' => $invitation->link
-        ]);
+        return Invitation::new();
     }
 }

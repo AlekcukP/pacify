@@ -3,16 +3,14 @@
 namespace App\Models;
 
 use App\Events\StoreCreated;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use \Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 
-class Store extends Authenticatable
+class Store extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use Notifiable;
 
     /**
      * The table associated with the model.

@@ -20,6 +20,10 @@ const Router = () => {
                 <Route path={ROUTES.LOOKUP} element={<LookupCard />} />
                 <Route path={ROUTES.SIGNUP} element={<SignupCard />} />
             </Route>
+            {/* <Route element={<AuthLayout />}>
+                <Route path={ROUTES.LOOKUP} element={<LookupPage />} />
+                <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
+            </Route> */}
 
             <Route element={<DashboardLayout />}>
                 <Route path={ROUTES.BASE} element={<HomeCard />} />

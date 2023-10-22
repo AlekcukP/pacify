@@ -2,25 +2,20 @@
 
 namespace App\Models;
 
-// use Laravel\Passport\HasApiTokens;
-use Tymon\JWTAuth\Contracts\JWTSubject;
-
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Events\UserCreated;
 use App\Models\User\Details;
-use App\Models\User\Group;
 use App\Models\Store;
-use App\Enums\UserGroups;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The table associated with the model.
@@ -37,10 +32,8 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'password',
         'email',
-        'group_id',
         'first_name',
         'last_name',
-        'account_type',
         'account_status',
         'created_at',
     ];
@@ -54,6 +47,20 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'remember_token',
     ];
+
+    /**
+     * The attributes that should be visible in arrays.
+     *
+     * @var array
+     */
+    protected $visible = ['email', 'full_name', 'account_status'];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['full_name'];
 
     /**
      * The attributes that should be cast.
@@ -74,33 +81,6 @@ class User extends Authenticatable implements JWTSubject
         'created' => UserCreated::class,
     ];
 
-
-
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
-
-    public function isAdmin()
-    {
-        return $this->group->name === UserGroups::ADMIN->value;
-    }
-
     /**
      * Get the details associated with the user.
      */
@@ -115,14 +95,6 @@ class User extends Authenticatable implements JWTSubject
     public function stores(): HasMany
     {
         return $this->hasMany(Store::class);
-    }
-
-    /**
-     * Get the user that owns the details.
-     */
-    public function group(): BelongsTo
-    {
-        return $this->belongsTo(Group::class);
     }
 
     /**

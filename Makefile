@@ -1,6 +1,7 @@
 #!make
-# WEB_SERVICE_NAME=pacify-dev
-# EXEC_USER=www-data
+
+APP_NAME=pacify
+APP_URL=http://127.0.0.1:3000
 
 # DOCKER COMMANDS
 .PHONY: up
@@ -23,13 +24,14 @@ bash:
 build:
 	./vendor/bin/sail build
 
+# VALET COMMANDS
 .PHONY: proxy
 proxy:
-	valet proxy pacify http://127.0.0.1:3000
+	valet proxy $(pacify) $(APP_URL)
 
 .PHONY: unproxy
 unproxy:
-	valet unproxy pacify
+	valet unproxy $(pacify)
 
 # YARN COMMANDS
 .PHONY: watch
@@ -45,9 +47,7 @@ migrate:
 rollback:
 	php artisan migrate:rollback
 
-.PHONY: client
-client:
-	php artisan passport:client
-
-
+.PHONY: fresh
+fresh:
+	php artisan migrate:fresh --seed
 

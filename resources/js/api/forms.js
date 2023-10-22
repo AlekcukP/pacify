@@ -1,9 +1,14 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQuery } from "./api";
+import { config } from '../app/config';
+import UrlHelper from '../helpers/url';
 
-export const validateApi = createApi({
-    reducerPath: 'validateApi',
-    baseQuery: baseQuery(),
+export const formsApi = createApi({
+    reducerPath: 'formsApi',
+    baseQuery: baseQuery({
+        baseUrl: UrlHelper.getBaseUrl(),
+        subdomain: 'forms'
+    }),
     endpoints: (builder) => ({
         validate: builder.mutation({
             query: ({ form, values }) => ({
@@ -17,4 +22,4 @@ export const validateApi = createApi({
     })
 });
 
-export const validate = validateApi.endpoints.validate.initiate;
+export const validate = formsApi.endpoints.validate.initiate;

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -29,16 +30,21 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
+            Route::middleware(['api', 'auth:sanctum'])
+                ->domain('api.' . config('app.domain'))
                 ->group(base_path('routes/api.php'));
 
-            Route::middleware('web')
-                ->prefix('auth')
+            Route::middleware('api')
+                ->domain('auth.' . config('app.domain'))
                 ->group(base_path('routes/auth.php'));
 
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
+            Route::middleware([HandlePrecognitiveRequests::class])
+                ->domain('forms.' . config('app.domain'))
+                ->group(base_path('routes/forms.php'));
+
+            Route::view('/{path?}', 'index')
+                ->where('path', '.*')
+                ->name('react');
         });
     }
 }

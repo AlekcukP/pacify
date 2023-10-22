@@ -4,13 +4,13 @@ import BurgerMenu from "./BurgerMenu";
 import Logo from "../../components/Logo";
 import defaultProfile from '../../../assets/images/default_profile.svg';
 import { DarkThemeToggle } from 'flowbite-react';
-import { useSignOut } from "../../hooks/auth/actions";
+import { useLogOut } from "../../hooks/auth/actions";
 
 const { Brand } = ReactNavbar;
 const { Header, Divider, Item } = Dropdown;
 
 const Navbar = () => {
-    const signOut = useSignOut();
+    const logOut = useLogOut();
 
     return (
         <ReactNavbar fluid rounded className="border-b-2 py-2">
@@ -35,7 +35,7 @@ const Navbar = () => {
                     <Item>Profile</Item>
                     <Item>Settings</Item>
                     <Divider />
-                    <Item onClick={signOut}>Sign out</Item>
+                    <Item onClick={logOut}>Sign out</Item>
                 </Dropdown>
             </div>
         </ReactNavbar>
