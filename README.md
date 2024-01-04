@@ -10,13 +10,6 @@ Welcome to Pacify, a Laravel and React/Redux-based project designed to enhance t
 
 Pacify is a web application that bridges the gap between stores and shoppers with its discount system integration. Leveraging Laravel for the backend and React/Redux for the frontend, Pacify offers a seamless experience for both sellers and shoppers alike.
 
-## Features
-
-- SMS-based discount system: Shoppers will receive discounts via SMS, enhancing customer engagement.
-- Shopper Management: Sellers can efficiently add new shoppers and manage shopper records.
-- Analytics: Detailed analytics and insights allow sellers to make informed decisions.
-- User-friendly Interface: Intuitive and responsive interface for easy navigation and interaction.
-
 ## Installation
 
 To run Pacify on your local system, make sure you have PHP 8.1 or higher installed. Then follow these steps:
@@ -50,10 +43,6 @@ Create a new database and update the `.env` file with the database credentials.
 `./vendor/bin/sail npm run dev`
 
 Your Pacify application should now be up and running at `http://localhost/`.
-
-## Usage
-
-After successfully setting up the application, you can access it through your web browser. As a seller, you can manage shoppers, analyze data, and work with the discount system. Shoppers will receive SMS-based discounts and enjoy a more personalized shopping experience.
 
 ## License
 
