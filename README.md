@@ -2,15 +2,21 @@
 
 Welcome to Pacify, a Laravel and React/Redux-based project designed to enhance the shopping experience for stores with discount systems. This application aims to streamline interactions with shoppers, providing them with SMS-based discounts while empowering sellers with tools to manage shoppers, analyze data, and more.
 
-## Requirements
+## Table of Contents
+ - [Requirements](#requirements)
+ - [Introduction](#introduction)
+ - [Installation](#installation)
+ - [License](#license)
+
+### Requirements
 
 - PHP version 8.1 or higher.
 
-## Introduction
+### Introduction
 
 Pacify is a web application that bridges the gap between stores and shoppers with its discount system integration. Leveraging Laravel for the backend and React/Redux for the frontend, Pacify offers a seamless experience for both sellers and shoppers alike.
 
-## Installation
+### Installation
 
 To run Pacify on your local system, make sure you have PHP 8.1 or higher installed. Then follow these steps:
 
@@ -44,6 +50,6 @@ Create a new database and update the `.env` file with the database credentials.
 
 Your Pacify application should now be up and running at `http://localhost/`.
 
-## License
+### License
 
 The Pacify project is licensed under the [MIT License](https://opensource.org/license/mit/). Feel free to use, modify, and distribute the code as per the terms of this license.
